@@ -144,6 +144,9 @@
   <data name="SpacesTitleBlock.Text" xml:space="preserve">
     <value>Spaces</value>
   </data>
+  <data name="TransactionsBlock.Text" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
   <data name="UsernameBox.PlaceholderText" xml:space="preserve">
     <value>Email</value>
   </data>

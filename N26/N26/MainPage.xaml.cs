@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -42,6 +43,21 @@ namespace N26
                 showSpaces.Add(space);
             }
             SpacesGridView.ItemsSource = showSpaces;
+
+            List<Transaction> transactions = await api.LoadTransactions();
+            List<Classes.Containers.Transaction> showTransactions = new List<Classes.Containers.Transaction>();
+            foreach (Transaction now in transactions)
+            {
+                Classes.Containers.Transaction transaction = new Classes.Containers.Transaction();
+                transaction.Amount = now.amount + now.currencyCode;
+                transaction.AmountColor = (now.amount < 0.0) ? new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)) : new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+                transaction.Name = now.GetName();
+                transaction.Date = now.GetDate();
+                transaction.ReferenceText = now.GetReference();
+
+                showTransactions.Add(transaction);
+            }
+            Transactions_ListView.ItemsSource = showTransactions;
         }
     }
 }

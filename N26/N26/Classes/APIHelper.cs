@@ -128,10 +128,41 @@ namespace N26.Classes
             return null;
         }
 
-        public async Task<Account> LoadAccount()
+        public async Task<List<Transaction>> GetTransactions(bool onlyCache)
         {
             if (!authenticated)
                 return null;
+
+            try
+            {
+                List<Transaction> transactions = new List<Transaction>();
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/smrt/transactions"));
+                Debug.WriteLine("Response:\n" + response.Content);
+
+                new StorageHelper().WriteValue("transactions", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                JArray trans = JArray.Parse(response.Content.ToString());
+                foreach (JObject transaction in trans)
+                    transactions.Add(new Transaction(transaction));
+
+                return transactions;
+            }
+            catch (FieldAccessException e)
+            {
+                Debug.WriteLine("Transactions failed:\n" + e.ToString());
+            }
+            return null;
+        }
+
+        public async Task<Account> LoadAccount()
+        {
             JObject jResponse = JObject.Parse(await new StorageHelper().ReadValue("account"));
 
             Account account = new Account();
@@ -148,10 +179,6 @@ namespace N26.Classes
 
         public async Task<List<Space>> LoadSpaces()
         {
-            if (!authenticated)
-                return null;
-
-
             JObject jResponse = JObject.Parse(await new StorageHelper().ReadValue("spaces"));
             List<Space> returnList = new List<Space>();
             JArray spaces = (JArray)jResponse.GetValue("spaces");
@@ -170,22 +197,24 @@ namespace N26.Classes
                     isCardAttached = (bool)spac.GetValue("isCardAttached")
                 };
 
-                /*if (balance.ContainsKey("overdraftAmount"))
-                    space.overdraftAmount = (double)balance.GetValue("overdraftAmount");*/
+                if (balance.ContainsKey("overdraftAmount"))
+                    space.overdraftAmount = (double)balance.GetValue("overdraftAmount");
 
                 returnList.Add(space);
             }
 
             return returnList;
-            try
-            {
-                
-            } catch (Exception e) {
-                Debug.WriteLine("Loading Spaces failed:\n" + e.ToString());
-            }
-            return null;
             
         }
 
+        public async Task<List<Transaction>> LoadTransactions()
+        {
+            List<Transaction> transactions = new List<Transaction>();
+            JArray trans = JArray.Parse(await new StorageHelper().ReadValue("transactions"));
+            foreach (JObject transaction in trans)
+                transactions.Add(new Transaction(transaction));
+
+            return transactions;
+        }
     }
 }

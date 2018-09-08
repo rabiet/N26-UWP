@@ -85,6 +85,7 @@ namespace N26
             }
             await api.GetAccount(true);
             await api.GetSpaces(true);
+            await api.GetTransactions(true);
             Frame.Navigate(typeof(MainPage), api);
             Frame.BackStack.Clear();
         }

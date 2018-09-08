@@ -10,21 +10,23 @@
 
     <Grid Background="{StaticResource N26Color}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="340" />
+            <RowDefinition Height="240" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Border Margin="20" 
+        <Border Margin="8" 
                 BorderBrush="#fff" 
                 BorderThickness="20" 
                 CornerRadius="40" 
                 Background="#fff" 
                 Width="500" 
                 Height="300"
+                Grid.Row="0"
                 Grid.Column="1">
             <StackPanel Background="#fff">
                 <TextBlock x:Uid="CurrentBalance" HorizontalAlignment="Center" Foreground="#555"/>
@@ -41,6 +43,68 @@
 
         </Border>
 
+        <Border BorderBrush="#fff" 
+                BorderThickness="20" 
+                CornerRadius="40" 
+                Background="#fff" 
+                Width="500" 
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Uid="TransactionsBlock" HorizontalAlignment="Center" Foreground="#555"/>
+                <ListView x:Name="Transactions_ListView" SelectionMode="None" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="*"  />
+                                    <RowDefinition Height="Auto"  />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontSize="16"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="{Binding Name}" />
+                                <TextBlock FontSize="12"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="{Binding Date}" 
+                                           Foreground="#555"/>
+                                <TextBlock FontSize="16"
+                                           Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                           Grid.Column="1"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Foreground="{Binding AmountColor}"
+                                           Text="{Binding Amount}" />
+                                <Rectangle Fill="#555"
+                                           HorizontalAlignment="Stretch"
+                                           Grid.ColumnSpan="2"
+                                           Grid.Row="2"
+                                           Height="2"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+        </Border>
+        
         <Border Margin="20" 
                 Grid.Column="0"
                 BorderBrush="#fff" 
@@ -48,7 +112,8 @@
                 CornerRadius="40" 
                 Background="#fff" 
                 Width="500" 
-                Height="500">
+                Height="540"
+                Grid.RowSpan="2">
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center"
                            x:Uid="SpacesTitleBlock"
