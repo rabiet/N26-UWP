@@ -29,8 +29,11 @@ Since it's currently at the "throw code in and show somewhat useful results" sta
 
 Coding help is also welcome, so feel free to create a pull request!
 
-If you find a bug, want a feature of have great ideas please do create an issue!
+If you find a bug, want a feature or have great ideas please do create an issue!
 
 # Contact
 For bugs or ideas please submit an issue.
 If there are any questions about anything you don't think are worthy opening an issue for you can contact me via Telegram [@rabiet](https://t.me/rabiet)
+
+
+Thanks to @b4d for providing the transaction category images!
