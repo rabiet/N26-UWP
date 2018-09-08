@@ -5,4 +5,9 @@
     xmlns:local="using:N26"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <SolidColorBrush x:Key="N26Color"
+                         Color="#49c4cb" />
+    </Application.Resources>
+    
 </Application>

@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="N26.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:N26"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/background_login.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <StackPanel VerticalAlignment="Center"
+                    Width="400">
+            <Image Source="Assets/N26_Back.png"
+                   Height="200"
+                   Width="200"
+                   Margin="20"
+                   HorizontalAlignment="Center"/>
+            <StackPanel Background="#fff">
+                <TextBox x:Uid="UsernameBox"
+                         x:Name="UsernameBox"
+                         Margin="8"/>
+                <PasswordBox x:Uid="PasswordBox"
+                             x:Name="PasswordBox"
+                             Margin="8" KeyDown="PasswordBox_KeyDown"/>
+            </StackPanel>
+            <HyperlinkButton x:Uid="ForgotPasswordButton"
+                             x:Name="ForgotPasswordButton"
+                             Margin="8"
+                             HorizontalAlignment="Center"
+                             Click="ForgotPasswordButton_Click" />
+            <Button x:Uid="LoginButton"
+                    x:Name="LoginButton" 
+                    Background="{StaticResource N26Color}"
+                    Foreground="#fff"
+                    Click="LoginButton_Click"/>
+
+            <Button x:Uid="CreateAccountButton"
+                    x:Name="CreateAccountButton" 
+                    Background="#fff"
+                    Foreground="{StaticResource N26Color}"
+                    Click="CreateAccountButton_Click"/>
+        </StackPanel>
+
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              x:Name="ProgressWorking"
+              Visibility="Collapsed"
+              Background="#aa333333"
+              Padding="20,80,20,80">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <ProgressRing IsActive="True" Margin="4"/>
+                <TextBlock x:Uid="PleaseWaitBlock" FontSize="20" Foreground="#fff" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

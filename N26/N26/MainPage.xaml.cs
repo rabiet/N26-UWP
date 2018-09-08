@@ -1,4 +1,5 @@
-﻿using System;
+﻿using N26.Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,18 +14,34 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace N26
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        APIHelper api;
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            api = (APIHelper)e.Parameter;
+
+            CurrentBalanceBlock.Text = (await api.LoadAccount()).availableBalance + "€";
+
+            List<Space> spaces = await api.LoadSpaces();
+            List<Classes.Containers.Space> showSpaces = new List<Classes.Containers.Space>();
+            foreach (Space now in spaces)
+            {
+                Classes.Containers.Space space = new Classes.Containers.Space();
+                space.IMGURL = now.image;
+                space.Name = now.name;
+                space.Balance = now.amount + now.currency;
+                showSpaces.Add(space);
+            }
+            SpacesGridView.ItemsSource = showSpaces;
         }
     }
 }
