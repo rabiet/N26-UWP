@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -119,14 +119,110 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\background_login.jpg" />
+    <Content Include="Assets\Categories\icon-category-atm.png" />
+    <Content Include="Assets\Categories\icon-category-atm.svg" />
+    <Content Include="Assets\Categories\icon-category-bars-restaurants.png" />
+    <Content Include="Assets\Categories\icon-category-bars-restaurants.svg" />
+    <Content Include="Assets\Categories\icon-category-business.png" />
+    <Content Include="Assets\Categories\icon-category-business.svg" />
+    <Content Include="Assets\Categories\icon-category-cash26.png" />
+    <Content Include="Assets\Categories\icon-category-cash26.svg" />
+    <Content Include="Assets\Categories\icon-category-direct-debit-reversal.svg" />
+    <Content Include="Assets\Categories\icon-category-direct-debit.png" />
+    <Content Include="Assets\Categories\icon-category-direct-debit.svg" />
+    <Content Include="Assets\Categories\icon-category-education.png" />
+    <Content Include="Assets\Categories\icon-category-education.svg" />
+    <Content Include="Assets\Categories\icon-category-fallback.png" />
+    <Content Include="Assets\Categories\icon-category-fallback.svg" />
+    <Content Include="Assets\Categories\icon-category-family-friends.png" />
+    <Content Include="Assets\Categories\icon-category-family-friends.svg" />
+    <Content Include="Assets\Categories\icon-category-food-groceries.png" />
+    <Content Include="Assets\Categories\icon-category-food-groceries.svg" />
+    <Content Include="Assets\Categories\icon-category-healthcare-drugstores.png" />
+    <Content Include="Assets\Categories\icon-category-healthcare-drugstores.svg" />
+    <Content Include="Assets\Categories\icon-category-household-utilities.png" />
+    <Content Include="Assets\Categories\icon-category-household-utilities.svg" />
+    <Content Include="Assets\Categories\icon-category-income.png" />
+    <Content Include="Assets\Categories\icon-category-income.svg" />
+    <Content Include="Assets\Categories\icon-category-insurances-finances.png" />
+    <Content Include="Assets\Categories\icon-category-insurances-finances.svg" />
+    <Content Include="Assets\Categories\icon-category-leisure-entertainment.png" />
+    <Content Include="Assets\Categories\icon-category-leisure-entertainment.svg" />
+    <Content Include="Assets\Categories\icon-category-media-electronics.png" />
+    <Content Include="Assets\Categories\icon-category-media-electronics.svg" />
+    <Content Include="Assets\Categories\icon-category-miscellaneous.png" />
+    <Content Include="Assets\Categories\icon-category-miscellaneous.svg" />
+    <Content Include="Assets\Categories\icon-category-moneybeam.png" />
+    <Content Include="Assets\Categories\icon-category-moneybeam.svg" />
+    <Content Include="Assets\Categories\icon-category-n26-referrals.png" />
+    <Content Include="Assets\Categories\icon-category-n26-referrals.svg" />
+    <Content Include="Assets\Categories\icon-category-outgoing.png" />
+    <Content Include="Assets\Categories\icon-category-outgoing.svg" />
+    <Content Include="Assets\Categories\icon-category-salary.png" />
+    <Content Include="Assets\Categories\icon-category-salary.svg" />
+    <Content Include="Assets\Categories\icon-category-savings-investments.png" />
+    <Content Include="Assets\Categories\icon-category-savings-investments.svg" />
+    <Content Include="Assets\Categories\icon-category-shopping.png" />
+    <Content Include="Assets\Categories\icon-category-shopping.svg" />
+    <Content Include="Assets\Categories\icon-category-spaces.png" />
+    <Content Include="Assets\Categories\icon-category-spaces.svg" />
+    <Content Include="Assets\Categories\icon-category-standing-order.png" />
+    <Content Include="Assets\Categories\icon-category-standing-order.svg" />
+    <Content Include="Assets\Categories\icon-category-subscriptions-donations.png" />
+    <Content Include="Assets\Categories\icon-category-subscriptions-donations.svg" />
+    <Content Include="Assets\Categories\icon-category-tax-fines.png" />
+    <Content Include="Assets\Categories\icon-category-tax-fines.svg" />
+    <Content Include="Assets\Categories\icon-category-transport-car.png" />
+    <Content Include="Assets\Categories\icon-category-transport-car.svg" />
+    <Content Include="Assets\Categories\icon-category-travel-holidays.png" />
+    <Content Include="Assets\Categories\icon-category-travel-holidays.svg" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-125.png" />
+    <Content Include="Assets\LargeTile.scale-150.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-400.png" />
     <Content Include="Assets\N26_Back.png" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-125.png" />
+    <Content Include="Assets\SmallTile.scale-150.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>

@@ -60,43 +60,49 @@
                 <ListView x:Name="Transactions_ListView" SelectionMode="None" Grid.Row="1">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="8">
+                            <Grid Padding="8,0,8,4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*" />
                                     <RowDefinition Height="*"  />
                                     <RowDefinition Height="Auto"  />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48" />
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Category}"
+                                       Stretch="Uniform" 
+                                       Grid.RowSpan="2"
+                                       Margin="-2"/>
                                 <TextBlock FontSize="16"
                                            Grid.Row="0"
-                                           Grid.Column="0"
+                                           Grid.Column="1"
                                            Text="{Binding Name}" />
                                 <TextBlock FontSize="12"
                                            Grid.Row="1"
-                                           Grid.Column="0"
+                                           Grid.Column="1"
                                            Text="{Binding Date}" 
                                            Foreground="#555"/>
                                 <TextBlock FontSize="16"
                                            Grid.Row="0"
                                            Grid.RowSpan="2"
-                                           Grid.Column="1"
+                                           Grid.Column="2"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
                                            Foreground="{Binding AmountColor}"
                                            Text="{Binding Amount}" />
                                 <Rectangle Fill="#555"
                                            HorizontalAlignment="Stretch"
-                                           Grid.ColumnSpan="2"
+                                           Grid.ColumnSpan="3"
                                            Grid.Row="2"
-                                           Height="2"/>
+                                           Margin="0,8,0,0"
+                                           Height="1"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

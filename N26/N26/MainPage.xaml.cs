@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -54,6 +55,7 @@ namespace N26
                 transaction.Name = now.GetName();
                 transaction.Date = now.GetDate();
                 transaction.ReferenceText = now.GetReference();
+                transaction.Category = string.Format("/Assets/Categories/icon-category-{0}.png", Regex.Split(now.category, "v2-")[1]); // TODO Change these to use SVG once scaling problems are fixed
 
                 showTransactions.Add(transaction);
             }

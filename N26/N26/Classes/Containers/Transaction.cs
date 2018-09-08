@@ -38,5 +38,11 @@ namespace N26.Classes.Containers
             get;
             set;
         }
+
+        public string Category
+        {
+            get;
+            set;
+        }
     }
 }
