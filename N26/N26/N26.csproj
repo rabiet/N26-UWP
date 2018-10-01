@@ -99,6 +99,8 @@
     <Compile Include="Classes\APIHelper.cs" />
     <Compile Include="Classes\Containers\Space.cs" />
     <Compile Include="Classes\Containers\Transaction.cs" />
+    <Compile Include="Classes\SavingsAccount.cs" />
+    <Compile Include="Classes\SavingsHistory.cs" />
     <Compile Include="Classes\Space.cs" />
     <Compile Include="Classes\StorageHelper.cs" />
     <Compile Include="Classes\Transaction.cs" />
