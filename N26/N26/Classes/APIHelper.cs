@@ -34,6 +34,7 @@ namespace N26.Classes
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
                 Debug.WriteLine("Response:\n" + response.Content.ToString());
+                await new StorageHelper().WriteValue("authentication", response.Content.ToString());
 
                 JObject jResponse = JObject.Parse(response.Content.ToString());
 

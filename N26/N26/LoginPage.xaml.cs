@@ -52,8 +52,6 @@ namespace N26
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage), api);
-            return;
             SendLogin(UsernameBox.Text, PasswordBox.Password);
         }
 
@@ -64,7 +62,7 @@ namespace N26
 
         private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            new StorageHelper().DeleteValue("authentication");
         }
 
         private void PasswordBox_KeyDown(object sender, KeyRoutedEventArgs e)

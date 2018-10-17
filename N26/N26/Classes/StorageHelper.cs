@@ -100,9 +100,20 @@ namespace N26.Classes
 
         public async Task<string> ReadValue(string fileName)
         {
-            IBuffer iv = CryptographicBuffer.ConvertStringToBinary((string) localSettings.Values[fileName], BinaryStringEncoding.Utf16BE);
+            try
+            {
+                IBuffer iv = CryptographicBuffer.ConvertStringToBinary((string)localSettings.Values[fileName], BinaryStringEncoding.Utf16BE);
+                StorageFile toLoad = await cache.GetFileAsync(string.Format("{0}.txt", fileName));
+                return Decrypt(await FileIO.ReadTextAsync(toLoad));
+            } catch (Exception) {
+                return null;
+            }
+        }
+
+        public async void DeleteValue(string fileName)
+        {
             StorageFile toLoad = await cache.GetFileAsync(string.Format("{0}.txt", fileName));
-            return Decrypt(await FileIO.ReadTextAsync(toLoad));
+            await toLoad.DeleteAsync();
         }
     }
 }
