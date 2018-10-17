@@ -6,139 +6,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="using:LiveCharts.Uwp"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    xmlns:controls="using:Windows.UI.Xaml.Controls">
 
-    <Grid Background="{StaticResource N26Color}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="340" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <controls:NavigationView 
+        IsBackButtonVisible="Collapsed" 
+        Header="Account" 
+        Loaded="NavigationView_Loaded"
+        SelectionChanged="NavigationView_SelectionChanged"
+        x:Name="mainNavView"
+        Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <controls:NavigationView.MenuItems>
+            <controls:NavigationViewItem Tag="account" Content="Account" Icon="PreviewLink" IsSelected="True" />
+            <controls:NavigationViewItem Tag="spaces" Content="Spaces" Icon="ViewAll" />
+            <controls:NavigationViewItem Tag="credit" Content="Credit" Icon="Calculator" />
+            <controls:NavigationViewItem Tag="savings" Content="Savings &amp; Investments" Icon="Calendar" />
+        </controls:NavigationView.MenuItems>
 
-        <Border Margin="8" 
-                BorderBrush="#fff" 
-                BorderThickness="20" 
-                CornerRadius="40" 
-                Background="#fff" 
-                Width="500" 
-                Height="300"
-                Grid.Row="0"
-                Grid.Column="1">
-            <StackPanel Background="#fff">
-                <TextBlock x:Uid="CurrentBalance" HorizontalAlignment="Center" Foreground="#555"/>
-                <TextBlock x:Name="CurrentBalanceBlock" HorizontalAlignment="Center" FontSize="20" Foreground="#000"/>
-                <!--<lvc:CartesianChart Height="240">
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis x:Uid="BalanceChartY" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis x:Uid="BalanceChartX" Labels="{Binding Labels}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>-->
-            </StackPanel>
-
-        </Border>
-
-        <Border BorderBrush="#fff" 
-                BorderThickness="20" 
-                CornerRadius="40" 
-                Background="#fff" 
-                Width="500" 
-                Grid.Row="1"
-                Grid.RowSpan="2"
-                Grid.Column="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock x:Uid="TransactionsBlock" HorizontalAlignment="Center" Foreground="#555"/>
-                <ListView x:Name="Transactions_ListView" SelectionMode="None" Grid.Row="1">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="8,0,8,4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*" />
-                                    <RowDefinition Height="*"  />
-                                    <RowDefinition Height="Auto"  />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48" />
-                                    <ColumnDefinition Width="4*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="{Binding Category}"
-                                       Stretch="Uniform" 
-                                       Grid.RowSpan="2"
-                                       Margin="-2"/>
-                                <TextBlock FontSize="16"
-                                           Grid.Row="0"
-                                           Grid.Column="1"
-                                           Text="{Binding Name}" />
-                                <TextBlock FontSize="12"
-                                           Grid.Row="1"
-                                           Grid.Column="1"
-                                           Text="{Binding Date}" 
-                                           Foreground="#555"/>
-                                <TextBlock FontSize="16"
-                                           Grid.Row="0"
-                                           Grid.RowSpan="2"
-                                           Grid.Column="2"
-                                           HorizontalAlignment="Right"
-                                           VerticalAlignment="Center"
-                                           Foreground="{Binding AmountColor}"
-                                           Text="{Binding Amount}" />
-                                <Rectangle Fill="#555"
-                                           HorizontalAlignment="Stretch"
-                                           Grid.ColumnSpan="3"
-                                           Grid.Row="2"
-                                           Margin="0,8,0,0"
-                                           Height="1"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-
-        </Border>
-        
-        <Border Margin="20" 
-                Grid.Column="0"
-                BorderBrush="#fff" 
-                BorderThickness="20" 
-                CornerRadius="40" 
-                Background="#fff" 
-                Width="500" 
-                Height="540"
-                Grid.RowSpan="2">
-            <StackPanel>
-                <TextBlock HorizontalAlignment="Center"
-                           x:Uid="SpacesTitleBlock"
-                           Foreground="#555"/>
-
-                <GridView x:Name="SpacesGridView" SelectionMode="None">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Width="226">
-                                <Image Source="{Binding IMGURL}" Height="226"/>
-                                <TextBlock Text="{Binding Name}"  HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding Balance}" HorizontalAlignment="Center" Margin="0,0,0,4" VerticalAlignment="Bottom" Foreground="#555"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-            </StackPanel>
-        </Border>
-        
-
-    </Grid>
+        <Frame x:Name="contentFrame" />
+    </controls:NavigationView>
 </Page>

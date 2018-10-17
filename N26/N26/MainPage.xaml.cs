@@ -1,6 +1,8 @@
 ﻿using N26.Classes;
+using N26.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -15,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace N26
 {
@@ -30,8 +33,8 @@ namespace N26
         {
             base.OnNavigatedTo(e);
             api = (APIHelper)e.Parameter;
-
-            CurrentBalanceBlock.Text = (await api.LoadAccount()).availableBalance + "€";
+            
+            /*CurrentBalanceBlock.Text = (await api.LoadAccount()).availableBalance + "€";
 
             List<Space> spaces = await api.LoadSpaces();
             List<Classes.Containers.Space> showSpaces = new List<Classes.Containers.Space>();
@@ -43,23 +46,32 @@ namespace N26
                 space.Balance = now.amount + now.currency;
                 showSpaces.Add(space);
             }
-            SpacesGridView.ItemsSource = showSpaces;
+            SpacesGridView.ItemsSource = showSpaces;*/
+        }
 
-            List<Transaction> transactions = await api.LoadTransactions();
-            List<Classes.Containers.Transaction> showTransactions = new List<Classes.Containers.Transaction>();
-            foreach (Transaction now in transactions)
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
+        {
+            contentFrame.Navigate(typeof(TransactionsPage), api);
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+            switch (item.Tag)
             {
-                Classes.Containers.Transaction transaction = new Classes.Containers.Transaction();
-                transaction.Amount = now.amount + now.currencyCode;
-                transaction.AmountColor = (now.amount < 0.0) ? new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)) : new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
-                transaction.Name = now.GetName();
-                transaction.Date = now.GetDate();
-                transaction.ReferenceText = now.GetReference();
-                transaction.Category = string.Format("/Assets/Categories/icon-category-{0}.png", Regex.Split(now.category, "v2-")[1]); // TODO Change these to use SVG once scaling problems are fixed
-
-                showTransactions.Add(transaction);
+                case "account":
+                    contentFrame.Navigate(typeof(TransactionsPage), api);
+                    break;
+                case "spaces":
+                    Debug.WriteLine("Not implemented yet");
+                    break;
+                case "credit":
+                    Debug.WriteLine("Not implemented yet");
+                    break;
+                case "savings":
+                    Debug.WriteLine("Not implemented yet");
+                    break;
             }
-            Transactions_ListView.ItemsSource = showTransactions;
         }
     }
 }

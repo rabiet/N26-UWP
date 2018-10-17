@@ -14,6 +14,8 @@
             <Setter Property="Margin" Value="8" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
+        <SolidColorBrush x:Key="N26Color"
+                         Color="#49c4cb" />
     </Page.Resources>
     
     <Grid>
@@ -24,17 +26,17 @@
         <StackPanel VerticalAlignment="Center"
                     Width="400">
             <Image Source="Assets/N26_Back.png"
-                   Height="200"
-                   Width="200"
-                   Margin="20"
+                   Margin="80"
                    HorizontalAlignment="Center"/>
             <StackPanel Background="#fff">
                 <TextBox x:Uid="UsernameBox"
                          x:Name="UsernameBox"
-                         Margin="8"/>
+                         Margin="8"
+                         InputScope="EmailSmtpAddress"/>
                 <PasswordBox x:Uid="PasswordBox"
                              x:Name="PasswordBox"
-                             Margin="8" KeyDown="PasswordBox_KeyDown"/>
+                             Margin="8" 
+                             KeyDown="PasswordBox_KeyDown"/>
             </StackPanel>
             <HyperlinkButton x:Uid="ForgotPasswordButton"
                              x:Name="ForgotPasswordButton"

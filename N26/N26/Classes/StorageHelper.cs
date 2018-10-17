@@ -87,13 +87,14 @@ namespace N26.Classes
             return CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, decryptedData);
         }
 
-        public async void WriteValue(string fileName, string value)
+        public async Task WriteValue(string fileName, string value)
         {
             IBuffer iv = CryptographicBuffer.GenerateRandom(cryptingProvider.BlockLength);
 
             localSettings.Values[fileName] = Encoding.Unicode.GetString(iv.ToArray());
 
             StorageFile toWrite = await cache.CreateFileAsync(string.Format("{0}.txt", fileName), CreationCollisionOption.ReplaceExisting);
+            Debug.WriteLine("Writing file: " + fileName);
             await FileIO.WriteTextAsync(toWrite, Encrypt(value));
         }
 

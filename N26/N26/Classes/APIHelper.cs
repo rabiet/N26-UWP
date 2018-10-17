@@ -59,7 +59,7 @@ namespace N26.Classes
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/accounts"));
                 Debug.WriteLine("Response:\n" + response.Content);
-                new StorageHelper().WriteValue("account", response.Content.ToString());
+                await new StorageHelper().WriteValue("account", response.Content.ToString());
 
                 if (onlyCache)
                     return null;
@@ -94,7 +94,7 @@ namespace N26.Classes
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/spaces"));
                 Debug.WriteLine("Response:\n" + response.Content);
-                new StorageHelper().WriteValue("spaces", response.Content.ToString());
+                await new StorageHelper().WriteValue("spaces", response.Content.ToString());
 
                 if (onlyCache)
                     return null;
@@ -143,7 +143,7 @@ namespace N26.Classes
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/smrt/transactions"));
                 Debug.WriteLine("Response:\n" + response.Content);
 
-                new StorageHelper().WriteValue("transactions", response.Content.ToString());
+                await new StorageHelper().WriteValue("transactions", response.Content.ToString());
 
                 if (onlyCache)
                     return null;
