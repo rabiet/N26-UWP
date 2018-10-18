@@ -83,6 +83,34 @@ namespace N26.Classes
             return null;
         }
 
+        public async Task<PersonalInfo> GetMe(bool onlyCache)
+        {
+            if (!authenticated)
+                return null;
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/me"));
+                Debug.WriteLine("Response:\n" + response.Content);
+                await new StorageHelper().WriteValue("personalinfo", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                JObject jResponse = JObject.Parse(response.Content.ToString());
+
+                return new PersonalInfo(JObject.Parse(response.Content.ToString()));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return null;
+        }
+
         public async Task<List<Space>> GetSpaces(bool onlyCache)
         {
             if (!authenticated)
@@ -176,6 +204,17 @@ namespace N26.Classes
             account.bankBalance = double.Parse(jResponse.GetValue("bankBalance").ToString());
 
             return account;
+        }
+
+        public async Task<PersonalInfo> LoadMe()
+        {
+            try
+            {
+                JObject jResponse = JObject.Parse(await new StorageHelper().ReadValue("personalinfo"));
+                return new PersonalInfo(jResponse);
+            } catch {
+                return null;
+            }
         }
 
         public async Task<List<Space>> LoadSpaces()

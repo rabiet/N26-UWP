@@ -150,4 +150,7 @@
   <data name="UsernameBox.PlaceholderText" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="WelcomeBlock.Text" xml:space="preserve">
+    <value>Welcome to N26!</value>
+  </data>
 </root>

@@ -11,7 +11,7 @@
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="8" />
+            <Setter Property="Margin" Value="0,20,0,-8" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
         <SolidColorBrush x:Key="N26Color"
@@ -23,37 +23,67 @@
             <ImageBrush ImageSource="Assets/background_login.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <StackPanel VerticalAlignment="Center"
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Image Source="Assets/N26_Logo.png"
+               Margin="20"
+               HorizontalAlignment="Center"
+               x:Name="N26Logo"
+               Grid.Row="1"
+               MaxWidth="200"/>
+
+        <TextBlock x:Uid="WelcomeBlock" 
+                   x:Name="WelcomeBlock"
+                   HorizontalAlignment="Center"
+                   Grid.Row="2"
+                   FontSize="24"
+                   Foreground="#000"/>
+
+        <StackPanel Background="#fff" 
+                    Grid.Row="3"
                     Width="400">
-            <Image Source="Assets/N26_Back.png"
-                   Margin="80"
-                   HorizontalAlignment="Center"/>
-            <StackPanel Background="#fff">
-                <TextBox x:Uid="UsernameBox"
-                         x:Name="UsernameBox"
-                         Margin="8"
-                         InputScope="EmailSmtpAddress"/>
-                <PasswordBox x:Uid="PasswordBox"
-                             x:Name="PasswordBox"
-                             Margin="8" 
-                             KeyDown="PasswordBox_KeyDown"/>
-            </StackPanel>
+
+            <TextBox x:Uid="UsernameBox"
+                     x:Name="UsernameBox"
+                     Margin="4"
+                     InputScope="EmailSmtpAddress"/>
+
+            <PasswordBox x:Uid="PasswordBox"
+                         x:Name="PasswordBox"
+                         Margin="4" 
+                         KeyDown="PasswordBox_KeyDown"/>
             <HyperlinkButton x:Uid="ForgotPasswordButton"
                              x:Name="ForgotPasswordButton"
-                             Margin="8"
+                             Margin="4"
                              HorizontalAlignment="Center"
-                             Click="ForgotPasswordButton_Click" />
+                             Click="ForgotPasswordButton_Click" 
+                             Grid.Row="4"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" 
+                    Width="400">
             <Button x:Uid="LoginButton"
                     x:Name="LoginButton" 
                     Background="{StaticResource N26Color}"
                     Foreground="#fff"
-                    Click="LoginButton_Click"/>
+                    Click="LoginButton_Click"
+                    Grid.Row="5"/>
 
             <Button x:Uid="CreateAccountButton"
                     x:Name="CreateAccountButton" 
                     Background="#fff"
                     Foreground="{StaticResource N26Color}"
-                    Click="CreateAccountButton_Click"/>
+                    Click="CreateAccountButton_Click"
+                    Grid.Row="6"/>
         </StackPanel>
 
         <Grid HorizontalAlignment="Stretch"
@@ -61,7 +91,8 @@
               x:Name="ProgressWorking"
               Visibility="Collapsed"
               Background="#aa333333"
-              Padding="20,80,20,80">
+              Padding="20,80,20,80"
+              Grid.RowSpan="6">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <ProgressRing IsActive="True" Margin="4"/>
                 <TextBlock x:Uid="PleaseWaitBlock" FontSize="20" Foreground="#fff" />

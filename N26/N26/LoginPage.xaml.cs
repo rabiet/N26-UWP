@@ -30,6 +30,7 @@ namespace N26
     public sealed partial class LoginPage : Page
     {
         APIHelper api;
+        PersonalInfo personalInfo;
 
         public LoginPage()
         {
@@ -39,11 +40,20 @@ namespace N26
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            personalInfo = await api.LoadMe();
+            if (personalInfo != null)
+            {
+                WelcomeBlock.Text = string.Format("Welcome back, {0}!", personalInfo.firstName);
+                UsernameBox.Text = personalInfo.email;
+                CreateAccountButton.Content = "Login using Windows Hello";
+            }
+
             var loginCredential = GetCredentialFromLocker();
             if (loginCredential == null)
                 return;
 
-            UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync("Please authenticate to log in!");
+            
+            UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync(string.Format("Welcome back, {0}!", personalInfo.firstName));
             if (consentResult.Equals(UserConsentVerificationResult.Verified))
             {
                 SendLogin(GetCredentialFromLocker().UserName, GetCredentialFromLocker().Password);
@@ -63,9 +73,19 @@ namespace N26
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
-        private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+        private async void CreateAccountButton_Click(object sender, RoutedEventArgs e)
         {
-            new StorageHelper().DeleteValue("authentication");
+            if (personalInfo == null)
+            {
+                var uri = new Uri(@"https://app.n26.com/register");
+                await Windows.System.Launcher.LaunchUriAsync(uri);
+            } else {
+                UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync("Please authenticate to log in!");
+                if (consentResult.Equals(UserConsentVerificationResult.Verified))
+                {
+                    SendLogin(GetCredentialFromLocker().UserName, GetCredentialFromLocker().Password);
+                }
+            }
         }
 
         private void PasswordBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -86,6 +106,7 @@ namespace N26
                 await new MessageDialog("Login failed!").ShowAsync();
                 return;
             }
+            await api.GetMe(true);
             await api.GetAccount(true);
             await api.GetSpaces(true);
             await api.GetTransactions(true);
