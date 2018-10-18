@@ -49,7 +49,7 @@ namespace N26.Views
                 transaction.Name = now.GetName();
                 transaction.Date = now.GetDate();
                 transaction.ReferenceText = now.GetReference();
-                transaction.Category = string.Format("/Assets/Categories-Dark/icon-category-{0}.png", Regex.Split(now.category, "v2-")[1]); // TODO Change these to use SVG once scaling problems are fixed
+                transaction.setCategory(Regex.Split(now.category, "v2-")[1]);
 
                 showTransactions.Add(transaction);
             }

@@ -98,7 +98,10 @@
                     <ComboBox
                         Grid.Row="0"
                         VerticalAlignment="Bottom"
-                        HorizontalAlignment="Stretch">
+                        HorizontalAlignment="Stretch"
+                        IsEnabled="False"
+                        SelectedIndex="{Binding CategoryIndex}"
+                        HorizontalContentAlignment="Center">
                         <ComboBoxItem Content="ATM" />
                         <ComboBoxItem Content="Bars &amp; Restaurants" />
                         <ComboBoxItem Content="Business expenses" />
