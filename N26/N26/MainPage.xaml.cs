@@ -51,7 +51,7 @@ namespace N26
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            contentFrame.Navigate(typeof(TransactionsPage), api);
+            mainNavView.SelectedItem = accountItem; 
         }
 
         private void NavigationView_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)

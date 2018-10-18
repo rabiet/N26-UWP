@@ -9,15 +9,14 @@
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
-    <controls:NavigationView 
-        IsBackButtonVisible="Collapsed" 
-        Header="Account" 
-        Loaded="NavigationView_Loaded"
-        SelectionChanged="NavigationView_SelectionChanged"
-        x:Name="mainNavView"
-        Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <controls:NavigationView IsBackButtonVisible="Collapsed" 
+                             Header="Account" 
+                             Loaded="NavigationView_Loaded"
+                             SelectionChanged="NavigationView_SelectionChanged"
+                             x:Name="mainNavView"
+                             Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <controls:NavigationView.MenuItems>
-            <controls:NavigationViewItem Tag="account" Content="Account" Icon="PreviewLink" IsSelected="True" />
+            <controls:NavigationViewItem Tag="account" Content="Account" Icon="PreviewLink" x:Name="accountItem" />
             <controls:NavigationViewItem Tag="spaces" Content="Spaces" Icon="ViewAll" />
             <controls:NavigationViewItem Tag="credit" Content="Credit" Icon="Calculator" />
             <controls:NavigationViewItem Tag="savings" Content="Savings &amp; Investments" Icon="Calendar" />

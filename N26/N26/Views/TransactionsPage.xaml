@@ -11,7 +11,7 @@
 
     <controls:MasterDetailsView x:Name="MasterDetail"
                                 NoSelectionContent="Select an item to view"
-                                MasterPaneWidth="520"
+                                MasterPaneWidth="540"
                                 MasterPaneBackground="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
                                 Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <controls:MasterDetailsView.ItemContainerStyle>
@@ -35,7 +35,7 @@
         </controls:MasterDetailsView.MasterHeader>
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate>
-                <Grid Padding="8,0,8,4">
+                <Grid Padding="0,0,0,4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="*"  />
@@ -58,7 +58,7 @@
                                            Grid.Row="1"
                                            Grid.Column="1"
                                            Text="{Binding Date}" 
-                                           Foreground="#555"/>
+                                           Foreground="#AAA"/>
                     <TextBlock FontSize="16"
                                            Grid.Row="0"
                                            Grid.RowSpan="2"
