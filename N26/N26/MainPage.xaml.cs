@@ -54,9 +54,9 @@ namespace N26
             contentFrame.Navigate(typeof(TransactionsPage), api);
         }
 
-        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavigationView_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
         {
-            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+            MUXC.NavigationViewItem item = args.SelectedItem as MUXC.NavigationViewItem;
             switch (item.Tag)
             {
                 case "account":
