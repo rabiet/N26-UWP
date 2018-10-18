@@ -55,9 +55,12 @@ namespace N26
             SendLogin(UsernameBox.Text, PasswordBox.Password);
         }
 
-        private void ForgotPasswordButton_Click(object sender, RoutedEventArgs e)
+        private async void ForgotPasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            string uriToLaunch = @"https://app.n26.com/forgotten-password";
+            var uri = new Uri(uriToLaunch);
+
+            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
         private void CreateAccountButton_Click(object sender, RoutedEventArgs e)

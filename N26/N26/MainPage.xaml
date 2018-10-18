@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="using:LiveCharts.Uwp"
     mc:Ignorable="d"
-    xmlns:controls="using:Windows.UI.Xaml.Controls">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
     <controls:NavigationView 
         IsBackButtonVisible="Collapsed" 
