@@ -106,10 +106,11 @@ namespace N26
                 await new MessageDialog("Login failed!").ShowAsync();
                 return;
             }
-            await api.GetMe(true);
-            await api.GetAccount(true);
-            await api.GetSpaces(true);
-            await api.GetTransactions(true);
+            //await api.GetMe(true);
+            //await api.GetAccount(true);
+            await api.GetSpaceImages(true);
+            //await api.GetSpaces(true);
+            //await api.GetTransactions(true);
             Frame.Navigate(typeof(MainPage), api);
             Frame.BackStack.Clear();
         }

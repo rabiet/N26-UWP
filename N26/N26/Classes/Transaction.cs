@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace N26.Classes
 {
-    class Transaction
+    public class Transaction
     {
         public string id;
         public string userId;

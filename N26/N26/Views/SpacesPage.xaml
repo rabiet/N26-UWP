@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
@@ -55,5 +56,11 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+        <AppBar Grid.Row="2" ClosedDisplayMode="Compact">
+            <AppBarButton Label="Add" 
+                          Icon="Add"
+                          x:Name="AddSpaceButton"
+                          Click="AddSpaceButton_Click"/>
+        </AppBar>
     </Grid>
 </Page>

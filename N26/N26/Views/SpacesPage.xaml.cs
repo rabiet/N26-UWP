@@ -1,4 +1,5 @@
 ﻿using N26.Classes;
+using N26.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -60,6 +61,11 @@ namespace N26.Views
             } catch {
                 Debug.WriteLine("GridViewItem Size could not be changed");
             }
+        }
+
+        private void AddSpaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CreateSpacePage), api);
         }
     }
 }

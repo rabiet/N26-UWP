@@ -1,5 +1,6 @@
 ﻿using N26.Classes;
 using N26.Views;
+using N26.Views.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

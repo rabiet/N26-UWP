@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="N26.Views.CreateSpacePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:N26.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel>
+            <Image Source="https://cdn.number26.de/spaces/default-images/account_cards.jpg" 
+                   Height="140" 
+                   Width="140"
+                   Tapped="Image_Tapped"
+                   x:Name="Image"/>
+            <TextBox HorizontalAlignment="Stretch" 
+                     PlaceholderText="Space Name"
+                     Margin="8"
+                     x:Name="NameBox"/>
+            <Button Content="Create" 
+                    HorizontalAlignment="Stretch"
+                    Margin="8"
+                    Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

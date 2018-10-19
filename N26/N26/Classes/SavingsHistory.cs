@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace N26.Classes
 {
-    class SavingsHistory
+    public class SavingsHistory
     {
         public string name;
         public string date;

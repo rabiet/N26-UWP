@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace N26.Classes
 {
-    class PersonalInfo
+    public class PersonalInfo
     {
         public string id;
         public string email;

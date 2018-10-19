@@ -1,0 +1,27 @@
+﻿<ContentDialog
+    x:Class="N26.Views.Dialogs.SpaceImageDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:N26.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Pick an Image"
+    PrimaryButtonText="Choose"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <GridView x:Name="SpaceImagesGridView" 
+                  SelectionMode="Single" 
+                  Height="400"
+                  SelectionChanged="SpaceImagesGridView_SelectionChanged">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Height="152"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</ContentDialog>

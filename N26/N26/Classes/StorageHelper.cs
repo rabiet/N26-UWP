@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace N26.Classes
 {
-    class StorageHelper
+    public class StorageHelper
     {
         StorageFolder cache = ApplicationData.Current.LocalFolder;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
