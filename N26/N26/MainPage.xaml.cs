@@ -33,20 +33,6 @@ namespace N26
         {
             base.OnNavigatedTo(e);
             api = (APIHelper)e.Parameter;
-            
-            /*CurrentBalanceBlock.Text = (await api.LoadAccount()).availableBalance + "€";
-
-            List<Space> spaces = await api.LoadSpaces();
-            List<Classes.Containers.Space> showSpaces = new List<Classes.Containers.Space>();
-            foreach (Space now in spaces)
-            {
-                Classes.Containers.Space space = new Classes.Containers.Space();
-                space.IMGURL = now.image;
-                space.Name = now.name;
-                space.Balance = now.amount + now.currency;
-                showSpaces.Add(space);
-            }
-            SpacesGridView.ItemsSource = showSpaces;*/
         }
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
@@ -61,9 +47,11 @@ namespace N26
             {
                 case "account":
                     contentFrame.Navigate(typeof(TransactionsPage), api);
+                    mainNavView.PaneTitle = "Account";
                     break;
                 case "spaces":
-                    Debug.WriteLine("Not implemented yet");
+                    contentFrame.Navigate(typeof(SpacesPage), api);
+                    mainNavView.PaneTitle = "Spaces";
                     break;
                 case "credit":
                     Debug.WriteLine("Not implemented yet");
@@ -72,6 +60,7 @@ namespace N26
                     Debug.WriteLine("Not implemented yet");
                     break;
             }
+            contentFrame.BackStack.Clear();
         }
     }
 }

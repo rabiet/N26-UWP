@@ -21,8 +21,13 @@
         </controls:MasterDetailsView.ItemContainerStyle>
         <controls:MasterDetailsView.MasterHeader>
             <StackPanel>
-                <TextBlock x:Uid="CurrentBalance" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="CurrentBalanceBlock" HorizontalAlignment="Center" FontSize="20"/>
+                <TextBlock x:Uid="CurrentBalance" 
+                           HorizontalAlignment="Center"
+                           Foreground="#AAA"/>
+                <TextBlock x:Name="CurrentBalanceBlock" 
+                           HorizontalAlignment="Center" 
+                           FontSize="20"
+                           FontWeight="Bold"/>
                 <!--<lvc:CartesianChart Height="240">
                     <lvc:CartesianChart.AxisY>
                         <lvc:Axis x:Uid="BalanceChartY" LabelFormatter="{Binding YFormatter}"></lvc:Axis>

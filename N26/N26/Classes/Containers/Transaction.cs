@@ -122,6 +122,9 @@ namespace N26.Classes.Containers
                 case "travel-holidays":
                     CategoryIndex = 21;
                     break;
+                default:
+                    CategoryIndex = 13;
+                    break;
             }
         }
     }

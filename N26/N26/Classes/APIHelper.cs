@@ -247,6 +247,13 @@ namespace N26.Classes
             
         }
 
+        public async Task<double> LoadSpacesTotalBalance()
+        {
+            JObject spaces = JObject.Parse(await new StorageHelper().ReadValue("spaces"));
+
+            return (double) spaces.GetValue("totalBalance");
+        }
+
         public async Task<List<Transaction>> LoadTransactions()
         {
             List<Transaction> transactions = new List<Transaction>();

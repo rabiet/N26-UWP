@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="N26.Views.SpacesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:N26.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+            <TextBlock Text="Total Balance:" 
+                       HorizontalAlignment="Center" 
+                       Foreground="#AAA" />
+            <TextBlock x:Name="SpacesTotalBalanceBlock"
+                       Text="0.00€" 
+                       HorizontalAlignment="Center" 
+                       FontWeight="Bold"
+                       FontSize="20" />
+            <Rectangle Height="2" 
+                       Fill="#AAA" 
+                       Margin="8" />
+        </StackPanel>
+        
+        <GridView x:Name="SpacesGridView" 
+                  SelectionMode="None"
+                  SizeChanged="SpacesGridView_SizeChanged"
+                  Margin="12,0,8,0"
+                  Grid.Row="1">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding IMGURL}" 
+                               MinWidth="100" 
+                               MaxWidth="350"/>
+                        
+                        <TextBlock Text="{Binding Name}"  
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,4,0,0" 
+                                   VerticalAlignment="Top"/>
+                        
+                        <TextBlock Text="{Binding Balance}" 
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,0,0,4" 
+                                   VerticalAlignment="Bottom" 
+                                   Foreground="#AAA"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>
