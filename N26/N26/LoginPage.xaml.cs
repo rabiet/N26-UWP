@@ -46,7 +46,8 @@ namespace N26
                 WelcomeBlock.Text = string.Format("Welcome back, {0}!", personalInfo.firstName);
                 UsernameBox.Text = personalInfo.email;
                 CreateAccountButton.Content = "Login using Windows Hello";
-            }
+            } else
+                return;
 
             var loginCredential = GetCredentialFromLocker();
             if (loginCredential == null)
