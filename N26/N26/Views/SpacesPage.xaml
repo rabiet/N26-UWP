@@ -57,10 +57,16 @@
             </GridView.ItemTemplate>
         </GridView>
         <AppBar Grid.Row="2" ClosedDisplayMode="Compact">
-            <AppBarButton Label="Add" 
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton Label="Add" 
                           Icon="Add"
                           x:Name="AddSpaceButton"
                           Click="AddSpaceButton_Click"/>
+                <AppBarButton Label="Transfer" 
+                          x:Name="TransferButton"
+                              Icon="Remote"
+                          Click="TransferButton_Click"/>
+            </StackPanel>
         </AppBar>
     </Grid>
 </Page>

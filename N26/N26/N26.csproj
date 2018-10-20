@@ -119,6 +119,9 @@
     <Compile Include="Views\Dialogs\SpaceImageDialog.xaml.cs">
       <DependentUpon>SpaceImageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\SpaceTransferDialog.xaml.cs">
+      <DependentUpon>SpaceTransferDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpacesPage.xaml.cs">
       <DependentUpon>SpacesPage.xaml</DependentUpon>
     </Compile>
@@ -290,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\SpaceImageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SpaceTransferDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

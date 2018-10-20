@@ -196,9 +196,6 @@ namespace N26.Classes
         {
             try
             {
-                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                body.Add(new KeyValuePair<string, string>("name", name));
-                body.Add(new KeyValuePair<string, string>("imageId", imageId));
                 Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 HttpStringContent content = new HttpStringContent(string.Format("{{\"name\":\"{0}\",\"imageId\":\"{1}\"}}", name, imageId));
@@ -214,6 +211,32 @@ namespace N26.Classes
                 Debug.WriteLine(e.ToString());
             }
             return "";
+        }
+
+        public async Task<bool> MakeSpaceTransfer(string fromID, string toID, double amount)
+        {
+            try
+            {
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                string body = string.Format("{{\"fromSpaceId\":\"{0}\", \"toSpaceId\":\"{1}\", \"amount\":{2}}}", fromID, toID, amount.ToString("0.00"));
+                HttpStringContent content = new HttpStringContent(body);
+                content.Headers.ContentType = new HttpMediaTypeHeaderValue("application/json");
+                Debug.WriteLine(body);
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.PostAsync(new Uri("https://api.tech26.de/api/spaces/transaction"), content);
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
+                if (response.Content.ToString().Contains("error"))
+                    return false;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            return false;
         }
 
         public async Task<List<Transaction>> GetTransactions(bool onlyCache)

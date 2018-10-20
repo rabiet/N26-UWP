@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -66,6 +67,26 @@ namespace N26.Views
         private void AddSpaceButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CreateSpacePage), api);
+        }
+
+        private async void TransferButton_Click(object sender, RoutedEventArgs e)
+        {
+            SpaceTransferDialog dialog = new SpaceTransferDialog(api);
+
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                //await new MessageDialog("From: " + dialog.fromSpace.name + " - " + dialog.fromSpace.accountID + "\nTo: " + dialog.toSpace.name + " - " + dialog.toSpace.accountID + "\nAmount: " + dialog.amount).ShowAsync();
+                if (await api.MakeSpaceTransfer(dialog.fromSpace.id, dialog.toSpace.id, dialog.amount) == false)
+                {
+                    await new MessageDialog("Transaction was not successful!").ShowAsync();
+                    return;
+                }
+                await api.GetTransactions(true);
+                await api.GetSpaces(true);
+                await api.GetAccount(true);
+                Frame.Navigate(typeof(SpacesPage), api);
+                Frame.BackStack.Clear();
+            }
         }
     }
 }
