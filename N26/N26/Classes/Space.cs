@@ -16,6 +16,8 @@ namespace N26.Classes
 
         public string image;
 
+        public string imageId;
+
         public double amount;
 
         public string currency;

@@ -213,6 +213,27 @@ namespace N26.Classes
             return "";
         }
 
+        public async Task<string> EditSpace(string id, string name, string imageId)
+        {
+            try
+            {
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                HttpStringContent content = new HttpStringContent(string.Format("{{\"name\":\"{0}\",\"imageId\":\"{1}\"}}", name, imageId));
+                content.Headers.ContentType = new HttpMediaTypeHeaderValue("application/json");
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.PutAsync(new Uri(string.Format("https://api.tech26.de/api/spaces/{0}", id)), content);
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
+
+                return response.Content.ToString();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return "";
+        }
+
         public async Task<bool> MakeSpaceTransfer(string fromID, string toID, double amount)
         {
             try
@@ -226,13 +247,11 @@ namespace N26.Classes
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/api/spaces/transaction"), content);
                 Debug.WriteLine("Response:\n" + response.Content.ToString());
-                if (response.Content.ToString().Contains("error"))
+                if (response.Content.ToString().Contains("Error"))
                     return false;
 
                 return true;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Debug.WriteLine(e.ToString());
             }
 
@@ -344,6 +363,18 @@ namespace N26.Classes
                 transactions.Add(new Transaction(transaction));
 
             return transactions;
+        }
+
+        public async Task<string> LoadImageIdFromUrl(string url)
+        {
+
+            List<SpaceImage> returnList = new List<SpaceImage>();
+            JArray images = JArray.Parse(await new StorageHelper().ReadValue("space-images"));
+            foreach (JObject image in images)
+                if (image.GetValue("url").ToString().Equals(url))
+                    return image.GetValue("id").ToString();
+
+            return "";
         }
     }
 }

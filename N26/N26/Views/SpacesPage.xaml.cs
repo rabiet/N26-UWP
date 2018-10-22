@@ -27,6 +27,7 @@ namespace N26.Views
     public sealed partial class SpacesPage : Page
     {
         APIHelper api;
+        List<Space> spaces;
         public SpacesPage()
         {
             this.InitializeComponent();
@@ -40,13 +41,14 @@ namespace N26.Views
 
             SpacesTotalBalanceBlock.Text = (await api.LoadSpacesTotalBalance()).ToString("0.00") + "€";
 
-            List<Space> spaces = await api.LoadSpaces();
+            spaces = await api.LoadSpaces();
             List<Classes.Containers.Space> showSpaces = new List<Classes.Containers.Space>();
             foreach (Space now in spaces)
             {
                 Classes.Containers.Space space = new Classes.Containers.Space();
                 space.IMGURL = now.image;
                 space.Name = now.name;
+                space.ID = now.id;
                 space.Balance = now.amount.ToString("0.00") + now.currency.Replace("EUR", "€");
                 showSpaces.Add(space);
             }
@@ -84,6 +86,28 @@ namespace N26.Views
                 await api.GetTransactions(true);
                 await api.GetSpaces(true);
                 await api.GetAccount(true);
+                Frame.Navigate(typeof(SpacesPage), api);
+                Frame.BackStack.Clear();
+            }
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            string id = ((MenuFlyoutItem)sender).Tag.ToString();
+            TextBox inputTextBox = new TextBox();
+            inputTextBox.AcceptsReturn = false;
+            inputTextBox.Height = 32;
+            ContentDialog dialog = new ContentDialog();
+            dialog.Content = inputTextBox;
+            dialog.Title = "Edit Space Name";
+            dialog.IsSecondaryButtonEnabled = true;
+            dialog.PrimaryButtonText = "Ok";
+            dialog.SecondaryButtonText = "Cancel";
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                Space tapped = spaces.Find((Space now) => { return now.id.Equals(id); });
+                await api.EditSpace(id, inputTextBox.Text, tapped.imageId);
+                await api.GetSpaces(true);
                 Frame.Navigate(typeof(SpacesPage), api);
                 Frame.BackStack.Clear();
             }

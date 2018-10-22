@@ -25,5 +25,11 @@ namespace N26.Classes.Containers
             get;
             set;
         }
+
+        public string ID
+        {
+            get;
+            set;
+        }
     }
 }

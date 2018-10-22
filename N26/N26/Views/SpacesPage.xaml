@@ -37,6 +37,11 @@
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
+                        <StackPanel.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit Name" Tag="{Binding ID}" Click="MenuFlyoutItem_Click" />
+                            </MenuFlyout>
+                        </StackPanel.ContextFlyout>
                         <Image Source="{Binding IMGURL}" 
                                MinWidth="100" 
                                MaxWidth="350"/>
