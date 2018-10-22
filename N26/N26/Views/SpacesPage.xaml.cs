@@ -126,5 +126,25 @@ namespace N26.Views
                 Frame.BackStack.Clear();
             }
         }
+
+        private async void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            string id = ((MenuFlyoutItem)sender).Tag.ToString();
+
+            SpaceImageDialog dialog = new SpaceImageDialog(api);
+
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                Space tapped = spaces.Find((Space now) => { return now.id.Equals(id); });
+                if (await api.EditSpace(id, tapped.name, dialog.selectedImage.id) == false)
+                {
+                    await new MessageDialog("Could not edit Space").ShowAsync();
+                    return;
+                }
+                await api.GetSpaces(true);
+                Frame.Navigate(typeof(SpacesPage), api);
+                Frame.BackStack.Clear();
+            }
+        }
     }
 }
