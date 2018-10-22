@@ -66,8 +66,18 @@ namespace N26.Views
             }
         }
 
-        private void AddSpaceButton_Click(object sender, RoutedEventArgs e)
+        private async void AddSpaceButton_Click(object sender, RoutedEventArgs e)
         {
+            Tuple<int, bool> uF = await api.LoadSpacesUserFeatures();
+            if (uF.Item1 == 0)
+            {
+                if (uF.Item2 == true)
+                    await new MessageDialog("With N26 Black and Metal you can make up to 10 spaces to stay more flexible.", "Upgrade for more spaces").ShowAsync();
+                else
+                    await new MessageDialog("You have reached the maximum of 10 spaces. Unfortunately you cannot upgrade anymore.", "No more upgrades left").ShowAsync(); //TODO Find proper Message
+
+                return;
+            }
             Frame.Navigate(typeof(CreateSpacePage), api);
         }
 

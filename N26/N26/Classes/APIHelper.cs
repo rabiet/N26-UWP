@@ -348,6 +348,12 @@ namespace N26.Classes
             
         }
 
+        public async Task<Tuple<int, bool>> LoadSpacesUserFeatures()
+        {
+            JObject userFeatures = (JObject) JObject.Parse(await new StorageHelper().ReadValue("spaces")).GetValue("userFeatures");
+            return new Tuple<int, bool>((int) userFeatures.GetValue("availableSpaces"), (bool) userFeatures.GetValue("canUpgrade"));
+        }
+
         public async Task<double> LoadSpacesTotalBalance()
         {
             JObject spaces = JObject.Parse(await new StorageHelper().ReadValue("spaces"));
