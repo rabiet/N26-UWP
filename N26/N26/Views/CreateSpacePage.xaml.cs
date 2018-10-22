@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -51,7 +52,12 @@ namespace N26.Views
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await api.CreateSpace(NameBox.Text, image.id);
+            if (await api.CreateSpace(NameBox.Text, image.id) == false)
+            {
+                await new MessageDialog("Could not create Space").ShowAsync();
+                Frame.GoBack();
+                return;
+            }
             await api.GetSpaces(true);
             Frame.Navigate(typeof(SpacesPage), api);
             Frame.BackStack.Clear();

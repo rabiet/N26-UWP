@@ -116,7 +116,11 @@ namespace N26.Views
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
                 Space tapped = spaces.Find((Space now) => { return now.id.Equals(id); });
-                await api.EditSpace(id, inputTextBox.Text, tapped.imageId);
+                if (await api.EditSpace(id, inputTextBox.Text, tapped.imageId) == false)
+                {
+                    await new MessageDialog("Could not edit Space").ShowAsync();
+                    return;
+                }
                 await api.GetSpaces(true);
                 Frame.Navigate(typeof(SpacesPage), api);
                 Frame.BackStack.Clear();

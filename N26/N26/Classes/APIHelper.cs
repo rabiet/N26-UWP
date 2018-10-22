@@ -192,7 +192,7 @@ namespace N26.Classes
             return null;
         }
 
-        public async Task<string> CreateSpace(string name, string imageId)
+        public async Task<bool> CreateSpace(string name, string imageId)
         {
             try
             {
@@ -204,16 +204,19 @@ namespace N26.Classes
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/api/spaces"), content);
                 Debug.WriteLine("Response:\n" + response.Content.ToString());
 
-                return response.Content.ToString();
+                if (response.Content.ToString().Contains("Error"))
+                    return false;
+
+                return true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
             }
-            return "";
+            return false;
         }
 
-        public async Task<string> EditSpace(string id, string name, string imageId)
+        public async Task<bool> EditSpace(string id, string name, string imageId)
         {
             try
             {
@@ -225,13 +228,16 @@ namespace N26.Classes
                 var response = await client.PutAsync(new Uri(string.Format("https://api.tech26.de/api/spaces/{0}", id)), content);
                 Debug.WriteLine("Response:\n" + response.Content.ToString());
 
-                return response.Content.ToString();
+                if (response.Content.ToString().Contains("Error"))
+                    return false;
+
+                return true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
             }
-            return "";
+            return false;
         }
 
         public async Task<bool> MakeSpaceTransfer(string fromID, string toID, double amount)
