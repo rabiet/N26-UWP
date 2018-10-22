@@ -41,6 +41,8 @@
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Edit Name" Tag="{Binding ID}" Click="MenuFlyoutItem_Click" />
                                 <MenuFlyoutItem Text="Edit Image" Tag="{Binding ID}" Click="MenuFlyoutItem_Click_1" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Delete Space" Tag="{Binding ID}" Click="MenuFlyoutItem_Click_2" />
                             </MenuFlyout>
                         </StackPanel.ContextFlyout>
                         <Image Source="{Binding IMGURL}" 

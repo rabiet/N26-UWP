@@ -146,5 +146,29 @@ namespace N26.Views
                 Frame.BackStack.Clear();
             }
         }
+
+        private async void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            string id = ((MenuFlyoutItem)sender).Tag.ToString();
+            Space tapped = spaces.Find((Space now) => { return now.id.Equals(id); });
+
+            ContentDialog dialog = new ContentDialog();
+            dialog.Content = string.Format("Are you sure you want to delete the space {0}", tapped.name);
+            dialog.Title = "Delete Space";
+            dialog.IsSecondaryButtonEnabled = true;
+            dialog.PrimaryButtonText = "Yes";
+            dialog.SecondaryButtonText = "No";
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                if (await api.DeleteSpace(id) == false)
+                {
+                    await new MessageDialog("Could not delete Space").ShowAsync();
+                    return;
+                }
+                await api.GetSpaces(true);
+                Frame.Navigate(typeof(SpacesPage), api);
+                Frame.BackStack.Clear();
+            }
+        }
     }
 }

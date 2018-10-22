@@ -240,6 +240,28 @@ namespace N26.Classes
             return false;
         }
 
+        public async Task<bool> DeleteSpace(string id)
+        {
+            try
+            {
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.DeleteAsync(new Uri(string.Format("https://api.tech26.de/api/spaces/{0}", id)));
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
+
+                if (response.Content.ToString().Contains("Error"))
+                    return false;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
         public async Task<bool> MakeSpaceTransfer(string fromID, string toID, double amount)
         {
             try
