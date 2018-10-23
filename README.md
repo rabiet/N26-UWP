@@ -18,9 +18,9 @@ However, I'm working on getting all (or at least most) of the functionality of t
 * Loading account and balance
 * Loading and showing transactions
 * Handling Spaces
-..* Showing your spaces and how much Money is in them
-..* Create, Edit or Delete your spaces
-..* Transfer Money between spaces
+  * Showing your spaces and how much Money is in them
+  * Create, Edit or Delete your spaces
+  * Transfer Money between spaces
 * Save all of the above in an encrypted offline cache
 
 ## Not Working Features
