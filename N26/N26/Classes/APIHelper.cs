@@ -16,13 +16,27 @@ namespace N26.Classes
     public class APIHelper
     {
         private string Token;
+        private string RefreshToken;
         private string TokenType;
         private bool authenticated = false;
 
 
         public APIHelper()
         {
+            loadAPI();
+        }
 
+        private async void loadAPI()
+        {
+            try
+            {
+                JObject token = JObject.Parse(await new StorageHelper().ReadValue("authentication"));
+                RefreshToken = token.GetValue("refresh_token").ToString();
+                Token = token.GetValue("access_token").ToString();
+                TokenType = token.GetValue("token_type").ToString();
+            } catch (Exception e) {
+                Debug.WriteLine(e.ToString());
+            }
         }
 
         public async Task<bool> GetToken(string username, string password)
@@ -44,9 +58,38 @@ namespace N26.Classes
 
                 Token = jResponse.GetValue("access_token").ToString();
                 TokenType = jResponse.GetValue("token_type").ToString();
+                RefreshToken = jResponse.GetValue("refresh_token").ToString();
                 authenticated = true;
                 return true;
             } catch (Exception e) {
+                Debug.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
+        public async Task<bool> RenewToken()
+        {
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                body.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
+                body.Add(new KeyValuePair<string, string>("refresh_token", RefreshToken));
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
+                await new StorageHelper().WriteValue("authentication", response.Content.ToString());
+
+                JObject jResponse = JObject.Parse(response.Content.ToString());
+
+                Token = jResponse.GetValue("access_token").ToString();
+                TokenType = jResponse.GetValue("token_type").ToString();
+                authenticated = true;
+                return true;
+            }
+            catch (Exception e)
+            {
                 Debug.WriteLine(e.ToString());
             }
             return false;

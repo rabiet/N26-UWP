@@ -57,7 +57,16 @@ namespace N26
             UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync(string.Format("Welcome back, {0}!", personalInfo.firstName));
             if (consentResult.Equals(UserConsentVerificationResult.Verified))
             {
-                SendLogin(GetCredentialFromLocker().UserName, GetCredentialFromLocker().Password);
+                if (await api.RenewToken())
+                    LoadData();
+                else
+                {
+                    await new MessageDialog("Could not refresh authentication token. Please log in again!").ShowAsync();
+                    new StorageHelper().DeleteAll();
+                    Frame.Navigate(typeof(LoginPage));
+                    Frame.BackStack.Clear();
+
+                }
             }
         }
 
@@ -107,6 +116,11 @@ namespace N26
                 await new MessageDialog("Login failed!").ShowAsync();
                 return;
             }
+            LoadData();
+        }
+
+        private async void LoadData()
+        {
             await api.GetMe(true);
             await api.GetAccount(true);
             await api.GetSpaceImages(true);
