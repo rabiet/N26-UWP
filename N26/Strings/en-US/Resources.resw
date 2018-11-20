@@ -129,6 +129,9 @@
   <data name="CurrentBalance.Text" xml:space="preserve">
     <value>Current Balance</value>
   </data>
+  <data name="DepositedHeader.Text" xml:space="preserve">
+    <value>DEPOSITED</value>
+  </data>
   <data name="ForgotPasswordButton.Content" xml:space="preserve">
     <value>Forgot your password?</value>
   </data>
@@ -138,8 +141,14 @@
   <data name="PasswordBox.PlaceholderText" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="PerformanceHeader.Text" xml:space="preserve">
+    <value>PERFORMANCE</value>
+  </data>
   <data name="PleaseWaitBlock.Text" xml:space="preserve">
     <value>Please wait...</value>
+  </data>
+  <data name="ProfitsHeader.Text" xml:space="preserve">
+    <value>PROFITS</value>
   </data>
   <data name="SpacesTitleBlock.Text" xml:space="preserve">
     <value>Spaces</value>

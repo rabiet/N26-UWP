@@ -158,6 +158,34 @@ namespace N26.Classes
             return null;
         }
 
+        public async Task<SavingsAnswer> GetSavings(bool onlyCache)
+        {
+            if (!authenticated)
+                return null;
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/hub/savings/accounts"));
+                Debug.WriteLine("Response:\n" + response.Content);
+                await new StorageHelper().WriteValue("savings", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                JObject jResponse = JObject.Parse(response.Content.ToString());
+
+                return new SavingsAnswer(JObject.Parse(response.Content.ToString()));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return null;
+        }
+
         public async Task<List<Space>> GetSpaces(bool onlyCache)
         {
             if (!authenticated)
@@ -385,6 +413,18 @@ namespace N26.Classes
                 JObject jResponse = JObject.Parse(await new StorageHelper().ReadValue("personalinfo"));
                 return new PersonalInfo(jResponse);
             } catch {
+                return null;
+            }
+        }
+
+        public async Task<SavingsAnswer> LoadSavings()
+        {
+            try
+            {
+                JObject jResponse = JObject.Parse(await new StorageHelper().ReadValue("savings"));
+                return new SavingsAnswer(jResponse);
+            } catch
+            {
                 return null;
             }
         }

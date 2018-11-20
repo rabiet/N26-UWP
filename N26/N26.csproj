@@ -99,8 +99,13 @@
     <Compile Include="Classes\APIHelper.cs" />
     <Compile Include="Classes\Containers\Space.cs" />
     <Compile Include="Classes\Containers\Transaction.cs" />
+    <Compile Include="Classes\Converter\CurrencyConverter.cs" />
+    <Compile Include="Classes\Converter\DateTimeToStringConverter.cs" />
+    <Compile Include="Classes\Converter\PercentageConverter.cs" />
     <Compile Include="Classes\PersonalInfo.cs" />
     <Compile Include="Classes\SavingsAccount.cs" />
+    <Compile Include="Classes\SavingsAnswer.cs" />
+    <Compile Include="Classes\SavingsForecast.cs" />
     <Compile Include="Classes\SavingsHistory.cs" />
     <Compile Include="Classes\Space.cs" />
     <Compile Include="Classes\SpaceImage.cs" />
@@ -121,6 +126,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\SpaceTransferDialog.xaml.cs">
       <DependentUpon>SpaceTransferDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SavingsInvestPage.xaml.cs">
+      <DependentUpon>SavingsInvestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SpacesPage.xaml.cs">
       <DependentUpon>SpacesPage.xaml</DependentUpon>
@@ -297,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\SpaceTransferDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SavingsInvestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -126,6 +126,7 @@ namespace N26
             await api.GetSpaceImages(true);
             await api.GetSpaces(true);
             await api.GetTransactions(true);
+            await api.GetSavings(false);
             Frame.Navigate(typeof(MainPage), api);
             Frame.BackStack.Clear();
         }

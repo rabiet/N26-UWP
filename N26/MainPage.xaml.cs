@@ -58,7 +58,8 @@ namespace N26
                     Debug.WriteLine("Not implemented yet");
                     break;
                 case "savings":
-                    Debug.WriteLine("Not implemented yet");
+                    contentFrame.Navigate(typeof(SavingsInvestPage), api);
+                    mainNavView.PaneTitle = "Savings & Investments";
                     break;
             }
             contentFrame.BackStack.Clear();
