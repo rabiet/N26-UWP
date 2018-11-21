@@ -57,14 +57,20 @@ namespace N26
             UserConsentVerificationResult consentResult = await UserConsentVerifier.RequestVerificationAsync(string.Format("Welcome back, {0}!", personalInfo.firstName));
             if (consentResult.Equals(UserConsentVerificationResult.Verified))
             {
-                if (await api.RenewToken())
+                ProgressWorking.Visibility = Visibility.Visible;
+                if (await api.RenewToken())                                                     // Sometimes this fails even with proper refresh_token
                     LoadData();
                 else
                 {
-                    await new MessageDialog("Could not refresh authentication token. Please log in again!").ShowAsync();
-                    new StorageHelper().DeleteAll();
-                    Frame.Navigate(typeof(LoginPage));
-                    Frame.BackStack.Clear();
+                    if (await api.GetToken(loginCredential.UserName, loginCredential.Password)) // This isn't ideal and should be changed!
+                        LoadData();
+                    else
+                    {
+                        new StorageHelper().DeleteAll();
+                        await new MessageDialog("Could not refresh authentication token. Please log in again!").ShowAsync();
+                        Frame.Navigate(typeof(LoginPage));
+                        Frame.BackStack.Clear();
+                    }
 
                 }
             }
