@@ -123,6 +123,9 @@
   <data name="BalanceChartY.Title" xml:space="preserve">
     <value>Balance</value>
   </data>
+  <data name="CalculationLogicHyperlink.Content" xml:space="preserve">
+    <value>Calculation Logic</value>
+  </data>
   <data name="CreateAccountButton.Content" xml:space="preserve">
     <value>Create an Account</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="LoginButton.Content" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="MonthlyDepositAmountTextBlock.Text" xml:space="preserve">
+    <value>Monthly deposit amount</value>
+  </data>
   <data name="PasswordBox.PlaceholderText" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -147,8 +153,14 @@
   <data name="PleaseWaitBlock.Text" xml:space="preserve">
     <value>Please wait...</value>
   </data>
+  <data name="PortfolioTextBlock.Text" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
   <data name="ProfitsHeader.Text" xml:space="preserve">
     <value>PROFITS</value>
+  </data>
+  <data name="RiskDisclaimerHyperlink.Content" xml:space="preserve">
+    <value>Risk Disclaimer</value>
   </data>
   <data name="SpacesTitleBlock.Text" xml:space="preserve">
     <value>Spaces</value>

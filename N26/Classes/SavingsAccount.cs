@@ -1,9 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Uwp;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace N26.Classes
 {
@@ -24,6 +29,8 @@ namespace N26.Classes
         public double Performance { get; set; }
         public double Profit { get; set; }
         public string Status { get; set; }
+
+        public SeriesCollection GraphSeries { get; set; }
 
         public SavingsAccount(JObject jObject)
         {
@@ -46,6 +53,62 @@ namespace N26.Classes
             Performance = (double)jObject.GetValue("performance");
             Profit = (double)jObject.GetValue("profit");
             Status = jObject.GetValue("status").ToString();
+
+            LineSeries pastSeries = new LineSeries { Title = "Balance", PointGeometry = DefaultGeometries.None, Values = new ChartValues<double>()};
+            LineSeries realisticSeries = new LineSeries { Title = "Realistic Forecast", PointGeometry = DefaultGeometries.None,  Values = new ChartValues<double>()};
+            LineSeries optimisticSeries = new LineSeries { Title = "Optimistic Forecast", PointGeometry = DefaultGeometries.None, Values = new ChartValues<double>()};
+            LineSeries pessimisticSeries = new LineSeries { Title = "Pessimistic Forecast", PointGeometry = DefaultGeometries.None, Values = new ChartValues<double>()};
+            foreach (SavingsHistory now in History)
+            {
+                pastSeries.Values.Add(now.Value);
+                realisticSeries.Values.Add(now.Value);
+                optimisticSeries.Values.Add(now.Value);
+                pessimisticSeries.Values.Add(now.Value);
+
+            }
+
+            pastSeries.Stroke = new SolidColorBrush(Color.FromArgb(0xff, 0, 0, 0xff));
+            realisticSeries.Stroke = new SolidColorBrush(Color.FromArgb(0xaa, 0, 0, 0xff));
+            realisticSeries.StrokeDashArray = new DoubleCollection { 5, 5 };
+            optimisticSeries.Stroke = new SolidColorBrush(Color.FromArgb(0xaa, 0, 0xff, 0));
+            optimisticSeries.StrokeDashArray = new DoubleCollection { 5, 5 };
+            pessimisticSeries.Stroke = new SolidColorBrush(Color.FromArgb(0xaa, 0xff, 0, 0));
+            pessimisticSeries.StrokeDashArray = new DoubleCollection { 5, 5 };
+
+            pastSeries.Values.Add(Balance);
+            realisticSeries.Values.Add(Balance);
+            optimisticSeries.Values.Add(Balance);
+            pessimisticSeries.Values.Add(Balance);
+
+            double oldReal = Balance, oldOpti = Balance, oldPessi = Balance;
+            int steps = (NextDate - DateTime.Now).Days;
+            foreach (SavingsForecast now in Forecasts)
+            {
+                for (int i = 1; i <= steps; i++)
+                {
+                    realisticSeries.Values.Add( oldReal + (((now.Value - oldReal) / steps) * i) );
+                }
+                oldReal = now.Value;
+                
+                for (int i = 1; i <= steps; i++)
+                {
+                    optimisticSeries.Values.Add(oldOpti + (((now.OptimisticValue - oldOpti) / steps) * i));
+                }
+                oldOpti = now.OptimisticValue;
+
+                for (int i = 1; i <= steps; i++)
+                {
+                    pessimisticSeries.Values.Add(oldPessi + (((now.PessimisticValue - oldPessi) / steps) * i));
+                }
+                oldPessi = now.PessimisticValue;
+                steps = 31;
+            }
+            
+            GraphSeries = new SeriesCollection();
+            GraphSeries.Add(realisticSeries);
+            GraphSeries.Add(optimisticSeries);
+            GraphSeries.Add(pessimisticSeries);
+            GraphSeries.Add(pastSeries);
         }
     }
 }

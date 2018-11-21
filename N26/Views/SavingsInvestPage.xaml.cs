@@ -38,5 +38,11 @@ namespace N26.Views
 
             MasterDetail.ItemsSource = answer.Accounts;
         }
+
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Uri link = (Uri)((HyperlinkButton)sender).Tag;
+            await Windows.System.Launcher.LaunchUriAsync(link);
+        }
     }
 }
