@@ -82,26 +82,20 @@ namespace N26.Classes
 
             double oldReal = Balance, oldOpti = Balance, oldPessi = Balance;
             int steps = (NextDate - DateTime.Now).Days;
-            foreach (SavingsForecast now in Forecasts)
+            //foreach (SavingsForecast now in Forecasts)
+            for (int j = 0; j < 1; j++) // Just load the first month for now. Should probably be changed to something that makes more sense
             {
+                SavingsForecast now = Forecasts[j];
                 for (int i = 1; i <= steps; i++)
                 {
-                    realisticSeries.Values.Add( oldReal + (((now.Value - oldReal) / steps) * i) );
-                }
-                oldReal = now.Value;
-                
-                for (int i = 1; i <= steps; i++)
-                {
+                    realisticSeries.Values.Add(oldReal + (((now.Value - oldReal) / steps) * i) );
+                    pessimisticSeries.Values.Add(oldPessi + (((now.PessimisticValue - oldPessi) / steps) * i));
                     optimisticSeries.Values.Add(oldOpti + (((now.OptimisticValue - oldOpti) / steps) * i));
                 }
+                oldReal = now.Value;
                 oldOpti = now.OptimisticValue;
-
-                for (int i = 1; i <= steps; i++)
-                {
-                    pessimisticSeries.Values.Add(oldPessi + (((now.PessimisticValue - oldPessi) / steps) * i));
-                }
                 oldPessi = now.PessimisticValue;
-                steps = 31;
+                steps = 31; // This is bad interpolation, needs a fix
             }
             
             GraphSeries = new SeriesCollection();
