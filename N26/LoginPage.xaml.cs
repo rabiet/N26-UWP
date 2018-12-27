@@ -131,7 +131,7 @@ namespace N26
             await api.GetAccount(true);
             await api.GetSpaceImages(true);
             await api.GetSpaces(true);
-            await api.GetTransactions(true);
+            await api.GetTransactions(true, limit: int.MaxValue);
             await api.GetSavings(true);
             await api.GetLimits(true);
             Frame.Navigate(typeof(MainPage), api);

@@ -7,9 +7,6 @@ using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Web.Http;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace N26.Classes
 {
@@ -47,7 +44,7 @@ namespace N26.Classes
                 body.Add(new KeyValuePair<string, string>("grant_type", "password"));
                 body.Add(new KeyValuePair<string, string>("username", username));
                 body.Add(new KeyValuePair<string, string>("password", password));
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
@@ -74,7 +71,7 @@ namespace N26.Classes
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
                 body.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
                 body.Add(new KeyValuePair<string, string>("refresh_token", RefreshToken));
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
@@ -102,7 +99,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/accounts"));
@@ -137,7 +134,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/settings/account/limits"));
@@ -166,7 +163,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/me"));
@@ -194,7 +191,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/hub/savings/accounts"));
@@ -222,7 +219,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/spaces"));
@@ -268,7 +265,7 @@ namespace N26.Classes
             try
             {
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.GetAsync(new Uri("https://api.tech26.de/api/spaces/creationDetails"));
@@ -296,7 +293,7 @@ namespace N26.Classes
         {
             try
             {
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 HttpStringContent content = new HttpStringContent(string.Format("{{\"name\":\"{0}\",\"imageId\":\"{1}\"}}", name, imageId));
                 content.Headers.ContentType = new HttpMediaTypeHeaderValue("application/json");
@@ -320,7 +317,7 @@ namespace N26.Classes
         {
             try
             {
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 HttpStringContent content = new HttpStringContent(string.Format("{{\"name\":\"{0}\",\"imageId\":\"{1}\"}}", name, imageId));
                 content.Headers.ContentType = new HttpMediaTypeHeaderValue("application/json");
@@ -344,7 +341,7 @@ namespace N26.Classes
         {
             try
             {
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
                 var response = await client.DeleteAsync(new Uri(string.Format("https://api.tech26.de/api/spaces/{0}", id)));
@@ -366,7 +363,7 @@ namespace N26.Classes
         {
             try
             {
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 string body = string.Format("{{\"fromSpaceId\":\"{0}\", \"toSpaceId\":\"{1}\", \"amount\":{2}}}", fromID, toID, amount.ToString("0.00"));
                 HttpStringContent content = new HttpStringContent(body);
@@ -386,7 +383,7 @@ namespace N26.Classes
             return false;
         }
 
-        public async Task<List<Transaction>> GetTransactions(bool onlyCache)
+        public async Task<List<Transaction>> GetTransactions(bool onlyCache, int limit = -1, DateTime from = default(DateTime), DateTime to = default(DateTime))
         {
             if (!authenticated)
                 return null;
@@ -395,10 +392,29 @@ namespace N26.Classes
             {
                 List<Transaction> transactions = new List<Transaction>();
                 List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
-                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
                 DateTime RequestTime = DateTime.Now;
-                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/smrt/transactions"));
+                HttpResponseMessage response = null;
+                if (limit == -1 && (from.Equals(default(DateTime)) || to.Equals(default(DateTime))))
+                    response = await client.GetAsync(new Uri("https://api.tech26.de/api/smrt/transactions"));
+                else {
+                    if (limit != -1)
+                        body.Add(new KeyValuePair<string, string>("limit", limit.ToString()));
+                    else
+                        body.Add(new KeyValuePair<string, string>("limit", int.MaxValue.ToString()));   // If no limit is specified should download ALL the transactions in that timeframe
+                    if (!from.Equals(default(DateTime)) && !to.Equals(default(DateTime)))
+                    {
+                        body.Add(new KeyValuePair<string, string>("from", ((long)(from - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString()));
+                        body.Add(new KeyValuePair<string, string>("to", ((long)(to - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString()));
+                    }
+                    string parameters = "?";
+                    foreach (KeyValuePair<string, string> param in body)
+                        parameters += string.Format("{0}={1}&", param.Key, param.Value);
+                    parameters = parameters.Remove(parameters.Length - 1);
+                    Debug.WriteLine(parameters);
+                    response = await client.GetAsync(new Uri("https://api.tech26.de/api/smrt/transactions" + parameters));
+                }
                 Debug.WriteLine("Response:\n" + response.Content);
 
                 await new StorageHelper().WriteValue("transactions", response.Content.ToString());
