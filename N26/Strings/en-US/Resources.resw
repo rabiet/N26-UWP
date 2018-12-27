@@ -123,6 +123,9 @@
   <data name="BalanceChartY.Title" xml:space="preserve">
     <value>Balance</value>
   </data>
+  <data name="BicTextBlock.Text" xml:space="preserve">
+    <value>BIC:</value>
+  </data>
   <data name="CalculationLogicHyperlink.Content" xml:space="preserve">
     <value>Calculation Logic</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="ForgotPasswordButton.Content" xml:space="preserve">
     <value>Forgot your password?</value>
+  </data>
+  <data name="IbanTextBlock.Text" xml:space="preserve">
+    <value>IBAN:</value>
   </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>Login</value>

@@ -44,6 +44,12 @@ namespace N26
         private void NavigationView_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
         {
             MUXC.NavigationViewItem item = args.SelectedItem as MUXC.NavigationViewItem;
+            if (args.IsSettingsSelected)
+            {
+                contentFrame.Navigate(typeof(SettingsPage), api);
+                mainNavView.PaneTitle = "Settings";
+                return;
+            }
             switch (item.Tag)
             {
                 case "account":

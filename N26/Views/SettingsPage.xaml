@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="N26.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:N26.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Media"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+
+    <Page.Resources>
+        <controls:AcrylicBrush x:Key="N26Color"
+                               TintColor="#49c4cb" 
+                               TintOpacity="0.6"
+                               BackgroundSource="Backdrop"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Border CornerRadius="20" Background="{StaticResource N26Color}" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Padding="12">
+                <TextBlock x:Name="UserNameTextBlock" Text="%name%" FontSize="32" />
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <TextBlock x:Uid="IbanTextBlock" FontSize="20"/>
+                    <TextBlock x:Name="ibanTextBlock" Margin="12,0,0,0" FontSize="20"/>
+                    <Button x:Name="IbanCopyButton" Click="IbanCopyButton_Click" Height="32">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Copy" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="BicTextBlock" FontSize="20"/>
+                    <TextBlock x:Name="bicTextBlock" Margin="12,0,0,0" FontSize="20"/>
+                    <Button x:Name="BicCopyButton" Click="BicCopyButton_Click" Height="32">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Copy" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+
+    </Grid>
+</Page>
