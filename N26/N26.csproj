@@ -104,6 +104,7 @@
     <Compile Include="Classes\Converter\InvestOptionConverter.cs" />
     <Compile Include="Classes\Converter\PercentageConverter.cs" />
     <Compile Include="Classes\Converter\PerMonthConverter.cs" />
+    <Compile Include="Classes\Limit.cs" />
     <Compile Include="Classes\PersonalInfo.cs" />
     <Compile Include="Classes\SavingsAccount.cs" />
     <Compile Include="Classes\SavingsAnswer.cs" />

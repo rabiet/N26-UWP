@@ -130,6 +130,35 @@ namespace N26.Classes
             return null;
         }
 
+        public async Task<List<Limit>> GetLimits(bool onlyCache)
+        {
+            if (!authenticated)
+                return null;
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                Windows.Web.Http.HttpClient client = new Windows.Web.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/settings/account/limits"));
+                Debug.WriteLine("Response:\n" + response.Content);
+                await new StorageHelper().WriteValue("limits", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                JArray jResponse = JArray.Parse(response.Content.ToString());
+                List<Limit> limitsList = new List<Limit>();
+                foreach (JObject limit in jResponse)
+                    limitsList.Add(new Limit(limit));
+                return limitsList;
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return null;
+        }
+
         public async Task<PersonalInfo> GetMe(bool onlyCache)
         {
             if (!authenticated)
@@ -404,6 +433,15 @@ namespace N26.Classes
             account.bankBalance = double.Parse(jResponse.GetValue("bankBalance").ToString());
 
             return account;
+        }
+
+        public async Task<List<Limit>> LoadLimits()
+        {
+            JArray jResponse = JArray.Parse(await new StorageHelper().ReadValue("limits"));
+            List<Limit> limitsList = new List<Limit>();
+            foreach (JObject limit in jResponse)
+                limitsList.Add(new Limit(limit));
+            return limitsList;
         }
 
         public async Task<PersonalInfo> LoadMe()
