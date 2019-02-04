@@ -9,7 +9,7 @@
     xmlns:lvc="using:LiveCharts.Uwp"
     xmlns:converter="using:N26.Classes.Converter"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource PageBackgroundBrush}">
 
     <Page.Resources>
         <converter:DateTimeToStringConverter x:Key="DateTimeConverter"></converter:DateTimeToStringConverter>

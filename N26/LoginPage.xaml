@@ -14,8 +14,6 @@
             <Setter Property="Margin" Value="0,20,0,-8" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
-        <SolidColorBrush x:Key="N26Color"
-                         Color="#49c4cb" />
     </Page.Resources>
     
     <Grid>

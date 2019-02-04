@@ -16,6 +16,22 @@
                                    BackgroundSource="HostBackdrop" 
                                    TintColor="{StaticResource SystemChromeAltHighColor}" 
                                    TintOpacity="0.4" />
+
+            <controls:AcrylicBrush x:Key="N26Color"
+                               TintColor="#49c4cb" 
+                               TintOpacity="0.6"
+                               BackgroundSource="Backdrop"/>
+
+            <controls:AcrylicBrush x:Key="PageBackgroundBrush"
+                                   BackgroundSource="HostBackdrop" 
+                                   TintColor="{StaticResource SystemChromeAltHighColor}" 
+                                   TintOpacity="0.8" />
+
+            <controls:AcrylicBrush x:Key="PageBackgroundBrightBrush"
+                                   BackgroundSource="HostBackdrop" 
+                                   TintColor="{StaticResource SystemChromeAltHighColor}" 
+                                   TintOpacity="0.8" />
+
         </ResourceDictionary>
     </Application.Resources>
 
