@@ -180,4 +180,7 @@
   <data name="WelcomeBlock.Text" xml:space="preserve">
     <value>Welcome to N26!</value>
   </data>
+  <data name="WithdrawalsThisMonthSub.Text" xml:space="preserve">
+    <value>remaining this month</value>
+  </data>
 </root>

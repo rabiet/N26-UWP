@@ -212,6 +212,8 @@ namespace N26.Classes
             return null;
         }
 
+        #region Spaces
+
         public async Task<List<Space>> GetSpaces(bool onlyCache)
         {
             if (!authenticated)
@@ -383,6 +385,8 @@ namespace N26.Classes
             return false;
         }
 
+        #endregion
+
         public async Task<List<Transaction>> GetTransactions(bool onlyCache, int limit = -1, DateTime from = default(DateTime), DateTime to = default(DateTime))
         {
             if (!authenticated)
@@ -431,6 +435,37 @@ namespace N26.Classes
             catch (FieldAccessException e)
             {
                 Debug.WriteLine("Transactions failed:\n" + e.ToString());
+            }
+            return null;
+        }
+
+        public async Task<List<Product>> GetProducts(bool onlyCache)
+        {
+            if (!authenticated)
+                return null;
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri("https://api.tech26.de/api/users/products"));
+                Debug.WriteLine("Response:\n" + response.Content);
+                await new StorageHelper().WriteValue("products", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                List<Product> productList = new List<Product>();
+                JArray jResponse = JArray.Parse(response.Content.ToString());
+
+                foreach (JObject now in jResponse)
+                    productList.Add(new Product(now));
+
+                return productList;
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
             }
             return null;
         }
@@ -534,6 +569,38 @@ namespace N26.Classes
                 transactions.Add(new Transaction(transaction));
 
             return transactions;
+        }
+
+        public async Task<List<Product>> LoadProducts()
+        {
+            List<Product> productList = new List<Product>();
+            JArray products = JArray.Parse(await new StorageHelper().ReadValue("products"));
+
+            foreach (JObject now in products)
+                productList.Add(new Product(now));
+
+            return productList;
+        }
+
+        public async Task<int> maxMonthlyATMWithdrawals()
+        {
+            foreach (Product now in await LoadProducts())
+                if (now.productId.Equals("FAIR_USE_ATM"))
+                    return now.totalFreeAtms;
+            return 0;
+        }
+
+        public async Task<int> usedMonthlyATMWithdrawals()
+        {
+            foreach (Product now in await LoadProducts())
+                if (now.productId.Equals("FAIR_USE_ATM"))
+                    return now.usedAtms;
+            return 0;
+        }
+
+        public async Task<int> remainingMonthlyATMWithdrawals()
+        {
+            return (await maxMonthlyATMWithdrawals()) - (await usedMonthlyATMWithdrawals());
         }
 
         public async Task<string> LoadImageIdFromUrl(string url)

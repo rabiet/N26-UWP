@@ -43,6 +43,8 @@ namespace N26.Views
             UserNameTextBlock.Text = string.Format("{0} {1}", personalInfo.firstName, personalInfo.lastName);
             ibanTextBlock.Text = System.Text.RegularExpressions.Regex.Replace(account.iban, ".{4}", "$0 ");
             bicTextBlock.Text = account.bic;
+
+            WithdrawalsThisMonth.Text = string.Format("{0}/{1} free ATM withdrawals", await api.remainingMonthlyATMWithdrawals(), await api.maxMonthlyATMWithdrawals());
         }
 
         private void IbanCopyButton_Click(object sender, RoutedEventArgs e)

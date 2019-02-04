@@ -106,6 +106,7 @@
     <Compile Include="Classes\Converter\PerMonthConverter.cs" />
     <Compile Include="Classes\Limit.cs" />
     <Compile Include="Classes\PersonalInfo.cs" />
+    <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\SavingsAccount.cs" />
     <Compile Include="Classes\SavingsAnswer.cs" />
     <Compile Include="Classes\SavingsForecast.cs" />
