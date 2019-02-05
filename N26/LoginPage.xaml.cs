@@ -135,6 +135,7 @@ namespace N26
             await api.GetSavings(true);
             await api.GetLimits(true);
             await api.GetProducts(true);
+            await api.GetBranches(true);
             Frame.Navigate(typeof(MainPage), api);
             Frame.BackStack.Clear();
         }

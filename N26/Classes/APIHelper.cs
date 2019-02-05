@@ -7,6 +7,7 @@ using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 
 namespace N26.Classes
 {
@@ -463,6 +464,44 @@ namespace N26.Classes
                     productList.Add(new Product(now));
 
                 return productList;
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return null;
+        }
+
+        public async Task<string> GetBranches(bool onlyCache)
+        {
+            if (!authenticated)
+                return null;
+
+            if (await Geolocator.RequestAccessAsync() != GeolocationAccessStatus.Allowed)
+                return null;
+
+            Geolocator geolocator = new Geolocator();
+            Geoposition pos = await geolocator.GetGeopositionAsync();
+
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", string.Format("{0} {1}", TokenType, Token));
+                DateTime RequestTime = DateTime.Now;
+                var response = await client.GetAsync(new Uri(string.Format("https://api.tech26.de/api/barzahlen/branches?nelat={0}&nelon={1}&swlat={2}&swlon={3}", pos.Coordinate.Point.Position.Latitude + 0.04, pos.Coordinate.Point.Position.Longitude + 0.04, pos.Coordinate.Point.Position.Latitude - 0.04, pos.Coordinate.Point.Position.Longitude - 0.04)));
+                Debug.WriteLine("Response:\n" + response.Content);
+                await new StorageHelper().WriteValue("branches", response.Content.ToString());
+
+                if (onlyCache)
+                    return null;
+
+                List<Product> productList = new List<Product>();
+                JArray jResponse = JArray.Parse(response.Content.ToString());
+
+                foreach (JObject now in jResponse)
+                    productList.Add(new Product(now));
+
+                return "";
             } catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
