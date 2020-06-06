@@ -132,7 +132,6 @@ namespace N26
             await api.GetSpaceImages(true);
             await api.GetSpaces(true);
             await api.GetTransactions(true, limit: int.MaxValue);
-            await api.GetSavings(true);
             await api.GetLimits(true);
             await api.GetProducts(true);
             await api.GetBranches(true);

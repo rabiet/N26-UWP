@@ -18,7 +18,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace N26
 {
@@ -38,12 +37,12 @@ namespace N26
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            mainNavView.SelectedItem = accountItem; 
+            mainNavView.SelectedItem = accountItem;
         }
 
-        private void NavigationView_SelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            MUXC.NavigationViewItem item = args.SelectedItem as MUXC.NavigationViewItem;
+            NavigationViewItem item = args.SelectedItem as NavigationViewItem;
             if (args.IsSettingsSelected)
             {
                 contentFrame.Navigate(typeof(SettingsPage), api);
@@ -62,10 +61,6 @@ namespace N26
                     break;
                 case "credit":
                     Debug.WriteLine("Not implemented yet");
-                    break;
-                case "savings":
-                    contentFrame.Navigate(typeof(SavingsInvestPage), api);
-                    mainNavView.PaneTitle = "Savings & Investments";
                     break;
             }
             contentFrame.BackStack.Clear();

@@ -2,37 +2,32 @@
     x:Class="N26.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:N26"
-    xmlns:controls="using:Microsoft.UI.Xaml.Media"
-    RequestedTheme="Dark">
+    xmlns:local="using:N26">
 
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
-            </ResourceDictionary.MergedDictionaries>
 
-            <controls:AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+            <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
                                    BackgroundSource="HostBackdrop" 
                                    TintColor="{StaticResource SystemChromeAltHighColor}" 
                                    TintOpacity="0.4" />
 
-            <controls:AcrylicBrush x:Key="N26Color"
+            <AcrylicBrush x:Key="N26Color"
                                TintColor="#49c4cb" 
                                TintOpacity="0.6"
                                BackgroundSource="Backdrop"/>
 
-            <controls:AcrylicBrush x:Key="PageBackgroundBrush"
+            <AcrylicBrush x:Key="PageBackgroundBrush"
                                    BackgroundSource="HostBackdrop" 
                                    TintColor="{StaticResource SystemChromeAltHighColor}" 
                                    TintOpacity="0.8" />
 
-            <controls:AcrylicBrush x:Key="PageBackgroundBrightBrush"
+            <AcrylicBrush x:Key="PageBackgroundBrightBrush"
                                    BackgroundSource="HostBackdrop" 
                                    TintColor="{StaticResource SystemChromeAltHighColor}" 
                                    TintOpacity="0.8" />
 
         </ResourceDictionary>
     </Application.Resources>
-
+    
 </Application>

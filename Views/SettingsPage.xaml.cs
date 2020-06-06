@@ -35,8 +35,6 @@ namespace N26.Views
             base.OnNavigatedTo(e);
             api = (APIHelper)e.Parameter;
 
-            SavingsAnswer answer = await api.LoadSavings();
-
             Account account = await api.LoadAccount();
             PersonalInfo personalInfo = await api.LoadMe();
 
