@@ -8,6 +8,7 @@ using Windows.Web.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using System.Threading;
 
 namespace N26.Classes
 {
@@ -17,6 +18,9 @@ namespace N26.Classes
         private string RefreshToken;
         private string TokenType;
         private bool authenticated = false;
+        
+        private string mfaToken = "";
+        DateTime mfaTimestamp;
 
 
         public APIHelper()
@@ -29,6 +33,12 @@ namespace N26.Classes
             try
             {
                 JObject token = JObject.Parse(await new StorageHelper().ReadValue("authentication"));
+                if (token == null)
+                {
+                    await new StorageHelper().DeleteAll();
+                    Debug.WriteLine("Could not load authentication values from storage. Reseting everything...");
+                    return;
+                }
                 RefreshToken = token.GetValue("refresh_token").ToString();
                 Token = token.GetValue("access_token").ToString();
                 TokenType = token.GetValue("token_type").ToString();
@@ -37,7 +47,7 @@ namespace N26.Classes
             }
         }
 
-        public async Task<bool> GetToken(string username, string password)
+        public async Task<bool> Start2FA(string username, string password)
         {
             try
             {
@@ -47,19 +57,88 @@ namespace N26.Classes
                 body.Add(new KeyValuePair<string, string>("password", password));
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
-                DateTime RequestTime = DateTime.Now;
                 var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
                 Debug.WriteLine("Response:\n" + response.Content.ToString());
-                await new StorageHelper().WriteValue("authentication", response.Content.ToString());
+                JObject jResponse = JObject.Parse(response.Content.ToString());
+
+                int status = (int) jResponse.GetValue("status");
+
+                if (status != 403 || !jResponse.GetValue("type").ToString().Equals("mfa_required"))
+                {
+                    Debug.WriteLine("Something went wrong when starting the 2FA process");
+                    return false;
+                }
+
+                mfaToken = jResponse.GetValue("mfaToken").ToString();
+
+                return await Approve2FA();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
+        private async Task<bool> Approve2FA()
+        {
+            try
+            {
+                JObject data = new JObject();
+                data.Add("challengeType", "oob");   // TODO implement SMS Approval
+                data.Add("mfaToken", mfaToken);
+
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
+                var response = await client.PostAsync(new Uri("https://api.tech26.de/api/mfa/challenge"), new HttpStringContent(data.ToString(), Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json"));
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
+                mfaTimestamp = DateTime.Now;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
+        public async Task<bool> Complete2FA()
+        {
+            try
+            {
+                List<KeyValuePair<string, string>> body = new List<KeyValuePair<string, string>>();
+                body.Add(new KeyValuePair<string, string>("grant_type", "mfa_oob"));
+                body.Add(new KeyValuePair<string, string>("mfaToken", mfaToken));
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Authorization", "Basic bXktdHJ1c3RlZC13ZHBDbGllbnQ6c2VjcmV0");
+                var response = await client.PostAsync(new Uri("https://api.tech26.de/oauth/token"), new HttpFormUrlEncodedContent(body));
+                Debug.WriteLine("Response:\n" + response.Content.ToString());
 
                 JObject jResponse = JObject.Parse(response.Content.ToString());
+
+                if (!jResponse.ContainsKey("access_token"))
+                {
+                    if (!jResponse.GetValue("error").ToString().Equals("authorization_pending"))
+                        return false;
+
+                    if ((DateTime.Now - mfaTimestamp).TotalMinutes > 1.0)
+                        return false;
+
+                    Thread.Sleep(5000);
+                    return await Complete2FA();
+                }
+
+                await new StorageHelper().WriteValue("authentication", response.Content.ToString());
 
                 Token = jResponse.GetValue("access_token").ToString();
                 TokenType = jResponse.GetValue("token_type").ToString();
                 RefreshToken = jResponse.GetValue("refresh_token").ToString();
                 authenticated = true;
+
                 return true;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Debug.WriteLine(e.ToString());
             }
             return false;
@@ -584,8 +663,11 @@ namespace N26.Classes
         public async Task<int> maxMonthlyATMWithdrawals()
         {
             foreach (Product now in await LoadProducts())
+            {
+                Debug.WriteLine(now.productId);
                 if (now.productId.Equals("FAIR_USE_ATM"))
                     return now.totalFreeAtms;
+            }
             return 0;
         }
 

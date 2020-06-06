@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -57,6 +58,12 @@ namespace N26.Views
             DataPackage bicPackage = new DataPackage();
             bicPackage.SetText(bicTextBlock.Text);
             Clipboard.SetContent(bicPackage);
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            await new StorageHelper().DeleteAll();
+            await CoreApplication.RequestRestartAsync("");
         }
     }
 }

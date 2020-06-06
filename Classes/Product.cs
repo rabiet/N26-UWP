@@ -25,7 +25,7 @@ namespace N26.Classes
         public enum AccountStatusCode
         {
             PRIMARY,
-            SECONDARY //Just guessed, I don't have a non-primary account to check
+            NON_PRIMARY
         }
 
         public string group { get; set; }
@@ -78,10 +78,10 @@ namespace N26.Classes
                 country = prod.GetValue("country").ToString();
                 status = (prod.GetValue("status").ToString().Equals("ACTIVE")) ? StatusCode.ACTIVE : StatusCode.INACTIVE;
 
-                if (prod.GetValue("groupDetails") == null)
+                JObject groupDetails = (JObject)prod.GetValue("groupDetails");
+                if (groupDetails == null)
                     return;
 
-                JObject groupDetails = (JObject)jObject.GetValue("groupDetails");
                 if (groupDetails.ContainsKey("userId"))
                     userId = groupDetails.GetValue("userId").ToString();
                 if (groupDetails.ContainsKey("merchantCountryOption"))
@@ -95,7 +95,7 @@ namespace N26.Classes
                 if (groupDetails.ContainsKey("endOfGracePeriod"))
                     endOfGracePeriod = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds((int)groupDetails.GetValue("endOfGracePeriod"));
                 if (groupDetails.ContainsKey("accountStatus"))
-                    accountStatus = groupDetails.GetValue("accountStatus").ToString().Equals("PRIMARY") ? AccountStatusCode.PRIMARY : AccountStatusCode.SECONDARY;
+                    accountStatus = groupDetails.GetValue("accountStatus").ToString().Equals("PRIMARY") ? AccountStatusCode.PRIMARY : AccountStatusCode.NON_PRIMARY;
                 if (groupDetails.ContainsKey("hasSalary"))
                     hasSalary = (bool)groupDetails.GetValue("hasSalary");
                 if (groupDetails.ContainsKey("hasIncome"))

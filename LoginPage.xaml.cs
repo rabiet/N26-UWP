@@ -1,4 +1,5 @@
 ﻿using N26.Classes;
+using N26.Views.Dialogs;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -58,26 +59,18 @@ namespace N26
             if (consentResult.Equals(UserConsentVerificationResult.Verified))
             {
                 ProgressWorking.Visibility = Visibility.Visible;
-                if (await api.RenewToken())                                                     // Sometimes this fails even with proper refresh_token
+                if (await api.RenewToken())
                     LoadData();
                 else
                 {
-                    if (await api.GetToken(loginCredential.UserName, loginCredential.Password)) // This isn't ideal and should be changed!
-                        LoadData();
-                    else
-                    {
-                        new StorageHelper().DeleteAll();
-                        await new MessageDialog("Could not refresh authentication token. Please log in again!").ShowAsync();
-                        Frame.Navigate(typeof(LoginPage));
-                        Frame.BackStack.Clear();
-                    }
-
+                    await new MessageDialog("We've lost authentication. Please log in again!").ShowAsync();
                 }
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            await new StorageHelper().DeleteAll();                  // Just to start with a clean cache
             SendLogin(UsernameBox.Text, PasswordBox.Password);
         }
 
@@ -117,12 +110,16 @@ namespace N26
             PasswordVault vault = new PasswordVault();
             vault.Add(new PasswordCredential("N26", username, password));
             ProgressWorking.Visibility = Visibility.Visible;
-            if (await api.GetToken(username, password) != true)
+            
+            if (!(await api.Start2FA(username, password)))
             {
                 await new MessageDialog("Login failed!").ShowAsync();
                 return;
             }
-            LoadData();
+
+            Confirm2FADialog dialog = new Confirm2FADialog(api);
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+                LoadData();
         }
 
         private async void LoadData()

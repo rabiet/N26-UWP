@@ -41,6 +41,7 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="12,16">
             <TextBlock Text="5/5 free ATM withdrawals" FontSize="20" x:Name="WithdrawalsThisMonth"/>
             <TextBlock x:Uid="WithdrawalsThisMonthSub" />
+            <Button Content="Log out"  Click="Button_Click"/>
         </StackPanel>
 
     </Grid>

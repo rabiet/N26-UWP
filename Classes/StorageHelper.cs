@@ -110,13 +110,13 @@ namespace N26.Classes
             }
         }
 
-        public async void DeleteValue(string fileName)
+        public async Task DeleteValue(string fileName)
         {
             StorageFile toDelete = await cache.GetFileAsync(string.Format("{0}.txt", fileName));
             await toDelete.DeleteAsync();
         }
 
-        public async void DeleteAll()
+        public async Task DeleteAll()
         {
             foreach (StorageFile file in await cache.GetFilesAsync())
                 await file.DeleteAsync();
